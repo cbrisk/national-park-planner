@@ -5,9 +5,11 @@
 
 header, footer, main {
   max-width: 1024px;
+  margin: 0 auto;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -18,10 +20,25 @@ body {
 
 main {
   flex: 1 0 auto;
+  position: relative;
+  min-height: calc(100vh - 146px);
 }
 
 footer {
   flex-shrink: 0;
+}
+
+main.home::after{
+  content: "";
+  background-image: url(background.jpg);
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.50;
+  z-index: -1;
 }
 
 h3 {
@@ -34,12 +51,61 @@ h4 {
   font-size: 1.5rem;
 }
 
+a.a-footer {
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+button:hover, a:hover {
+  cursor: pointer;
+}
+a:visited, a:hover, a:link, a:active{
+  text-decoration: none;
+  color: inherit;
+}
+
+i.size1 {
+  font-size: 1.6rem;
+  margin: .5rem;
+  color: #056CAA;
+}
+i.size2 {
+  color: #255f82;
+  font-weight: 300;
+}
+
 .dark {
   background-color: #255f82;
   color: #66E6F4;
 }
 
-.bgimage {
-  background: url("background.jpg") no-repeat center center fixed;
-  background-size: cover;
+.light {
+  background-color: #66E6F4;
+}
+
+.medium {
+  color: #056CAA;
+}
+.padding {
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+  font-size: 1.1rem;
+}
+
+.margin {
+  margin-bottom: 5rem;
+}
+
+.other {
+  background-color: #66E6F4;
+}
+
+.parkImg {
+  max-width: 70%;
+}
+
+.white {
+  width: 90%;
+  margin: 0 auto;
+  border-bottom: 2px solid #66E6F4;
 }
