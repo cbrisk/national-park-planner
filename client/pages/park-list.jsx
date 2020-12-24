@@ -5,20 +5,20 @@ function Park(props) {
   console.log(images);
   let element;
   if (images.length) {
-    element = <img src={images[0].url} className="parkImg"></img>
+    element = <img src={images[0].url} className="parkImg" alt="Park image failed to load "></img>
   } else {
-    element = <span>No image found</span>
+    element = <span className="text-danger">No image found</span>
   }
 
   return (
     <li className="list-group-item white">
-      <div className="d-flex justify-content-between">
-        <span>{fullName}</span>
-        <span>{states}</span>
+      <div className="d-flex justify-content-between py-3">
+        <span className="blue">{fullName}</span>
+        <span className="blue">{states}</span>
       </div>
-      <div>
+      <div className="d-flex justify-content-between align-items-center">
         {element}
-        <i className="fas fa-chevron-right size2"></i>
+        <i className="fas fa-chevron-right blue"></i>
       </div>
     </li>
   );
@@ -47,8 +47,9 @@ export default class ParkList extends React.Component {
 
   render () {
     return (
-      <main className="other">
-        <h3></h3>
+      <main className="light">
+        <a href="#" data-view=""><i className="fas fa-home size1 medium"></i></a>
+        <h3 className="pb-3 text-center blue">All Parks</h3>
         <ul className="list-group">
           {
             this.state.parks.map(park => {

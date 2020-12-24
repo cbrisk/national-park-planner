@@ -4,7 +4,7 @@ export default function Home(props) {
   return (
     <>
       <main className="home">
-        <a href="#" data-view=""><i className="fas fa-home size1"></i></a>
+        <a href="#" data-view=""><i className="fas fa-home size1 medium"></i></a>
         <div className="d-flex flex-column align-items-center">
           <h3 className="my-4 medium">
             Welcome

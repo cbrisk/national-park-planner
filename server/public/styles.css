@@ -67,11 +67,6 @@ a:visited, a:hover, a:link, a:active{
 i.size1 {
   font-size: 1.6rem;
   margin: .5rem;
-  color: #056CAA;
-}
-i.size2 {
-  color: #255f82;
-  font-weight: 300;
 }
 
 .dark {
@@ -86,6 +81,11 @@ i.size2 {
 .medium {
   color: #056CAA;
 }
+
+.blue {
+  color: #255f82;
+}
+
 .padding {
   padding-left: 1.4rem;
   padding-right: 1.4rem;
@@ -96,12 +96,8 @@ i.size2 {
   margin-bottom: 5rem;
 }
 
-.other {
-  background-color: #66E6F4;
-}
-
 .parkImg {
-  max-width: 70%;
+  max-width: 80%;
 }
 
 .white {
