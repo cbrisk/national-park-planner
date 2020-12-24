@@ -2,7 +2,6 @@ import React from 'react';
 
 function Park(props) {
   const { fullName, states, images } = props.park;
-  console.log(images);
   let element;
   if (images.length) {
     element = <img src={images[0].url} className="parkImg" alt="Park image failed to load "></img>
@@ -37,7 +36,7 @@ export default class ParkList extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          parks: data.data,
+          parks: data.data
         });
       })
       .catch(error => {
