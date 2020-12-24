@@ -26,7 +26,7 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Home />
     } else if (route.path === 'all-parks') {
-      return <ParkList/>
+      return <ParkList path={route.path}/>
     }
   }
 

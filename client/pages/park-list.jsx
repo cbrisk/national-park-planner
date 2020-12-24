@@ -45,16 +45,20 @@ export default class ParkList extends React.Component {
   }
 
   render () {
+    let display;
+    if (this.props.path === 'all-parks') {
+      display = 'All Parks';
+    }
     return (
       <main className="light">
         <a href="#" data-view=""><i className="fas fa-home size1 medium"></i></a>
-        <h3 className="pb-3 text-center blue">All Parks</h3>
+        <h3 className="pb-3 text-center blue">{display}</h3>
         <ul className="list-group">
           {
             this.state.parks.map(park => {
               return (
                 <Park
-                  key={park.id}
+                  key={park.parkCode}
                   park={park}
                 />
               );
