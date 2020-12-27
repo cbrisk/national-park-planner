@@ -24,19 +24,19 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home />
+      return <Home />;
     } else if (route.path === 'all-parks') {
-      return <ParkList path={route.path}/>
+      return <ParkList display='All Parks'/>;
     }
   }
 
   render() {
     return (
-      <>
+      <div className="custom-container">
         <Header />
         { this.renderPage() }
         <Footer />
-      </>
+      </div>
     );
   }
 }

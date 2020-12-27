@@ -4,9 +4,9 @@ function Park(props) {
   const { fullName, states, images } = props.park;
   let element;
   if (images.length) {
-    element = <img src={images[0].url} className="parkImg" alt="Park image failed to load "></img>
+    element = <img src={images[0].url} className="park-img" alt="Park image failed to load "></img>;
   } else {
-    element = <span className="text-danger">No image found</span>
+    element = <span className="text-danger">No image found</span>;
   }
 
   return (
@@ -44,15 +44,11 @@ export default class ParkList extends React.Component {
       });
   }
 
-  render () {
-    let display;
-    if (this.props.path === 'all-parks') {
-      display = 'All Parks';
-    }
+  render() {
     return (
-      <main className="light">
-        <a href="#" data-view=""><i className="fas fa-home size1 medium"></i></a>
-        <h3 className="pb-3 text-center blue">{display}</h3>
+      <main className="light-blue">
+        <a href="#" data-view=""><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <h3 className="pb-3 text-center blue">{this.props.display}</h3>
         <ul className="list-group">
           {
             this.state.parks.map(park => {
