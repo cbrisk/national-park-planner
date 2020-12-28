@@ -4,7 +4,7 @@ export default function Home(props) {
   return (
     <>
       <main className="home">
-        <a href="#" data-view=""><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
         <div className="d-flex flex-column align-items-center">
           <h3 className="my-4 medium-blue">
             Welcome
@@ -18,7 +18,9 @@ export default function Home(props) {
             </a>
           </button>
           <button type="button" className="btn margin-bottom dark-blue">
-            View National Parks by State
+            <a href='#state-form'>
+              View National Parks by State
+            </a>
           </button>
         </div>
       </main>

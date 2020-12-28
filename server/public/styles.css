@@ -7,19 +7,9 @@
   margin: 0 auto;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 main {
-  flex: 1 0 auto;
   position: relative;
   min-height: calc(100vh - 146px);
-}
-
-footer {
-  flex-shrink: 0;
 }
 
 main.home::after {
@@ -71,6 +61,10 @@ i.home-icon {
   font-size: 1.6rem;
 }
 
+li:last-child {
+  margin-bottom: 1rem;
+}
+
 .dark-blue {
   background-color: #255f82;
   color: #66e6f4;
@@ -102,8 +96,21 @@ i.home-icon {
   max-width: 80%;
 }
 
-.white {
+.park-items {
   width: 90%;
   margin: 0 auto;
   border-bottom: 2px solid #66e6f4;
+}
+
+.state-form {
+  width: 90%;
+  margin: 0 auto;
+  border: 2px solid #66e6f4;
+  background-color: white;
+}
+
+.select-state {
+  font-size: 1.5rem;
+  border: 1px solid #255f82;
+  border-radius: 4px;
 }
