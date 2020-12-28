@@ -4,18 +4,22 @@ export default class StateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Choose a State'
+      value: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({
+      value: event.target.value
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    location.href = '#parks-by-state';
+    this.props.getState(this.state.value);
   }
 
   render() {
@@ -23,10 +27,10 @@ export default class StateForm extends React.Component {
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
         <h3 className="pb-3 text-center blue">Parks by State</h3>
-        <div className="state-form d-flex justify-content-center">
+        <div className="state-form d-flex justify-content-center rounded">
           <form className="d-flex flex-column align-items-center" onSubmit={this.handleSubmit}>
-            <select onChange={this.handleChange} required className="form-select my-4 medium-blue">
-              <option selected disabled>Choose a State</option>
+            <select required value={this.state.value} className="form-select my-5 medium-blue select-state" onChange={this.handleChange}>
+              <option value="" disabled>Choose a State</option>
               <option value="al">AL</option>
               <option value="ak">AK</option>
               <option value="az">AZ</option>
@@ -80,9 +84,7 @@ export default class StateForm extends React.Component {
             </select>
             <div>
               <button className="btn dark-blue mb-5" type="submit">
-                <a href='#parks-by-state'>
-                  View Parks
-                </a>
+                View Parks
               </button>
             </div>
           </form>
