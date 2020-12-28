@@ -28,8 +28,7 @@ export default class ParkList extends React.Component {
     super(props);
     this.state = {
       parks: [],
-      spinner: 'spinner-border medium-blue',
-      display: ''
+      isLoading: true
     };
   }
 
@@ -46,30 +45,33 @@ export default class ParkList extends React.Component {
       .then(data => {
         this.setState({
           parks: data.data,
-          spinner: 'spinner-border medium-blue d-none'
+          isLoading: false
         });
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    if (stateCode) {
-      this.setState({
-        display: `Parks in ${stateCode.toUpperCase()}`
-      });
-    } else {
-      this.setState({
-        display: 'All Parks'
-      });
-    }
   }
 
   render() {
+    let spinner;
+    if (this.state.isLoading) {
+      spinner = 'spinner-border blue';
+    } else {
+      spinner = 'spinner-border blue d-none';
+    }
+    let display;
+    if (this.props.stateCode) {
+      display = `Parks in ${this.props.stateCode.toUpperCase()}`;
+    } else {
+      display = 'All Parks';
+    }
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <h3 className="pb-3 text-center blue">{this.state.display}</h3>
+        <h3 className="pb-3 text-center blue">{display}</h3>
         <div className="d-flex justify-content-center">
-          <div className={this.state.spinner} role="status"></div>
+          <div className={spinner} role="status"></div>
         </div>
         <ul className="list-group">
           {

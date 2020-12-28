@@ -18,7 +18,7 @@ export default class StateForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    location.href = '#parks-by-state';
+    location.hash = '#parks-by-state';
     this.props.getState(this.state.value);
   }
 
