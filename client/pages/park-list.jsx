@@ -17,7 +17,7 @@ function Park(props) {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         {element}
-        <i className="fas fa-chevron-right blue"></i>
+        <a href={`#parks?parkCode=${props.parkCode}`}><i className="fas fa-chevron-right blue"></i></a>
       </div>
     </li>
   );
@@ -34,12 +34,7 @@ export default class ParkList extends React.Component {
 
   componentDidMount() {
     const { stateCode, path } = this.props;
-    let url;
-    if (path === 'all-parks') {
-      url = '/api/parks';
-    } else if (path === 'parks-by-state') {
-      url = `/api/parks/${stateCode}`;
-    }
+    const url = path === 'all-parks' ? '/api/parks' : `/api/parks/${stateCode}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -54,18 +49,8 @@ export default class ParkList extends React.Component {
   }
 
   render() {
-    let spinner;
-    if (this.state.isLoading) {
-      spinner = 'spinner-border blue';
-    } else {
-      spinner = 'spinner-border blue d-none';
-    }
-    let display;
-    if (this.props.stateCode) {
-      display = `Parks in ${this.props.stateCode.toUpperCase()}`;
-    } else {
-      display = 'All Parks';
-    }
+    const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
+    const display = this.props.stateCode ? `Parks in ${this.props.stateCode.toUpperCase()}` : 'All Parks';
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -79,6 +64,7 @@ export default class ParkList extends React.Component {
               return (
                 <Park
                   key={park.parkCode}
+                  parkCode={park.parkCode}
                   park={park}
                 />
               );
