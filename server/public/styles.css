@@ -102,8 +102,15 @@ i.home-icon {
   max-width: 80%;
 }
 
-.white {
+.park-items {
   width: 90%;
   margin: 0 auto;
   border-bottom: 2px solid #66e6f4;
+}
+
+.state-form {
+  width: 90%;
+  margin: 0 auto;
+  border: 2px solid #66e6f4;
+  background-color: white;
 }

@@ -3,6 +3,7 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Home from './pages/home';
 import ParkList from './pages/park-list';
+import StateForm from './pages/state-form';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -27,7 +28,11 @@ export default class App extends React.Component {
       return <Home />;
     } else if (route.path === 'all-parks') {
       return <ParkList display='All Parks'/>;
-    }
+    } else if (route.path === 'state-form') {
+      return <StateForm/>
+    } //else if (route.path === 'parks-by-state') {
+      //return <ParkList display='' />;
+    //}
   }
 
   render() {
