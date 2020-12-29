@@ -13,14 +13,12 @@ export default class ParkDetails extends React.Component {
 
   componentDidMount() {
     const { parkCode } = this.props;
-    const [ path ] = window.location.hash.split('&');
     fetch(`/api/parks/parkCode/${parkCode}`)
       .then(response => response.json())
       .then(data => {
         this.setState({
           park: data.data[0],
-          isLoading: false,
-          path: path
+          isLoading: false
         });
       })
       .catch(error => {
@@ -68,6 +66,7 @@ export default class ParkDetails extends React.Component {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? "park-info d-none" : "park-info";
     const { fullName, states } = this.state.park;
+    const path = this.props.path;
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -80,9 +79,9 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className={className}>
           <div className="d-flex justify-content-center mb-4">
-            <a className={this.getClass("description")} href={`${this.state.path}&tab=description`}>Description</a>
-            <a className={this.getClass("weather")} href={`${this.state.path}&tab=weather`}>Weather</a>
-            <a className={this.getClass("photos")} href={`${this.state.path}&tab=photos`}>Photos</a>
+            <a className={this.getClass("description")} href={`${path}&tab=description`}>Description</a>
+            <a className={this.getClass("weather")} href={`${path}&tab=weather`}>Weather</a>
+            <a className={this.getClass("photos")} href={`${path}&tab=photos`}>Photos</a>
           </div>
           {this.renderPage()}
         </div>

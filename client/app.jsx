@@ -44,7 +44,7 @@ export default class App extends React.Component {
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
       const tab = route.params.get('tab');
-      return <ParkDetails parkCode={parkCode} tab={tab}/>;
+      return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
     }
   }
 
