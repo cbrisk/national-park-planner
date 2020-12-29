@@ -44,7 +44,7 @@ export default class ParkDetails extends React.Component {
       return (
         <p className="mx-3 fs-5">{weatherInfo}</p>
       );
-    } else if (tabSelected === 'photos' && images.length) {
+    } else if (tabSelected === 'photos') {
       if (!images.length) {
         return <span className="text-danger my-2">No image found</span>
       }
