@@ -128,7 +128,7 @@ li:last-child {
 }
 .tab {
   border: 1px solid #255f82;
-  border-radius: 4px;
+  width: 35%
 }
 
 .title {
@@ -141,8 +141,4 @@ li:last-child {
 
 .photos {
   max-width: 100%;
-}
-
-.tab-width {
-  width: 34%
 }

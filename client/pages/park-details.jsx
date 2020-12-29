@@ -29,7 +29,7 @@ export default class ParkDetails extends React.Component {
   }
   getClass(tab) {
     const tabSelected = this.props.tab;
-    const className = tab === tabSelected ? "nav-link tab tab-width active-tab text-center" : "nav-link tab tab-width text-center";
+    const className = tab === tabSelected ? "nav-link tab active-tab text-center" : "nav-link tab text-center";
     return className;
   }
 
@@ -66,7 +66,7 @@ export default class ParkDetails extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? "park-info rounded d-none" : "park-info rounded";
+    const className = this.state.isLoading ? "park-info d-none" : "park-info";
     const { fullName, states } = this.state.park;
     return (
       <main className="light-blue">
