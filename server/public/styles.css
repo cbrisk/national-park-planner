@@ -128,7 +128,7 @@ li:last-child {
 }
 .tab {
   border: 1px solid #255f82;
-  width: 35%
+  width: calc(100% / 3);
 }
 
 .title {
