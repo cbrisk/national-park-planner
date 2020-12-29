@@ -1,4 +1,5 @@
 import React from 'react';
+import parseRoute from '../lib/parse-route';
 
 export default class ParkDetails extends React.Component {
   constructor(props) {
@@ -11,6 +12,11 @@ export default class ParkDetails extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener('hashchange', event => {
+      this.setState({
+        route: parseRoute(window.location.hash)
+      });
+    });
     const { parkCode } = this.props;
     fetch(`/api/parks/parkCode/${parkCode}`)
       .then(response => response.json())
@@ -25,27 +31,40 @@ export default class ParkDetails extends React.Component {
         console.error('Error:', error);
       });
   }
+
   renderPage() {
-    <div>
-      <p date-view="description"></p>
-      <p date-view="weather"></p>
-      <ul date-view="images">
-        {
-          images.map((image, index) => {
-            return (
-              <li key={index}>
-                <img src={image.url} alt="Park image failed to load"/>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
+    const { description, weatherInfo, images } = this.state.park;
+    if (route.params.get('tab') === 'description') {
+      return (
+      <p>{description}</p>
+      );
+    } else if (route.params.get('tab') === 'weather') {
+      return (
+        <p>{weatherInfo}</p>
+      );
+    } else if (route.params.get('tab') === 'photos' && images.length) {
+      return (
+        <ul>
+          {
+            images.map((image, index) => {
+              return (
+                <li key={index}>
+                  <img src={image.url} alt="Park image failed to load" />
+                </li>
+              );
+            })
+          }
+        </ul>
+      );
+    } else {
+      return <span className="text-danger my-2">No image found</span>;
+    }
   }
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const { description, weatherInfo, images, fullName, states } = this.state.park;
+    const className = this.state.isLoading ? "park-info rounded d-none" : "park-info rounded";
+    const { fullName, states } = this.state.park;
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -56,7 +75,7 @@ export default class ParkDetails extends React.Component {
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
         </div>
-        <div className="park-info rounded">
+        <div className={className}>
           <div className="d-flex justify-content-center my-4">
             <a className="nav-link tab active" href={`${this.state.path}?tab=description`}>Description</a>
             <a className="nav-link tab" href={`${this.state.path}?tab=weather`}>Weather</a>

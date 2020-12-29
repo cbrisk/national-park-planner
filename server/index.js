@@ -25,7 +25,6 @@ app.get('/api/parks/stateCode/:state', (req, res, next) => {
 });
 
 app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
-  console.log("hello code");
   const parkCode = req.params.parkCode;
   fetch(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&limit=500&api_key=${process.env.API_KEY}`, { headers: { 'User-Agent': 'Chaim' } })
     .then(response => response.json())
