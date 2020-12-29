@@ -36,6 +36,8 @@ h4 {
 }
 ul {
   list-style: none;
+  max-width: 95%;
+  margin: 0 auto;
 }
 a.a-footer {
   font-size: 1.5rem;
@@ -135,4 +137,8 @@ li:last-child {
 
 .active-tab {
   border: 3px solid #255f82;
+}
+
+.photos {
+  max-width: 100%;
 }

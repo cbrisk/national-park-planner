@@ -17,7 +17,7 @@ function Park(props) {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         {element}
-        <a href={`#parks?parkCode=${props.parkCode}`}><i className="fas fa-chevron-right blue"></i></a>
+        <a href={`#parks?parkCode=${props.parkCode}&tab=description`}><i className="fas fa-chevron-right blue"></i></a>
       </div>
     </li>
   );

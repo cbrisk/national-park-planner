@@ -13,13 +13,14 @@ export default class ParkDetails extends React.Component {
 
   componentDidMount() {
     const { parkCode } = this.props;
+    const [ path ] = window.location.hash.split('&');
     fetch(`/api/parks/parkCode/${parkCode}`)
       .then(response => response.json())
       .then(data => {
         this.setState({
           park: data.data[0],
           isLoading: false,
-          path: window.location.hash
+          path: path
         });
       })
       .catch(error => {
@@ -48,12 +49,12 @@ export default class ParkDetails extends React.Component {
         return <span className="text-danger my-2">No image found</span>
       }
       return (
-        <ul>
+        <ul className="px-0">
           {
             images.map((image, index) => {
               return (
                 <li key={index} className="pb-3">
-                  <img src={image.url} className="park-img" alt="Park image failed to load" />
+                  <img src={image.url} className="photos" alt="Park image failed to load" />
                 </li>
               );
             })
@@ -78,7 +79,7 @@ export default class ParkDetails extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="d-flex justify-content-center my-4">
+          <div className="d-flex justify-content-center mb-4">
             <a className={this.getClass("description")} href={`${this.state.path}&tab=description`}>Description</a>
             <a className={this.getClass("weather")} href={`${this.state.path}&tab=weather`}>Weather</a>
             <a className={this.getClass("photos")} href={`${this.state.path}&tab=photos`}>Photos</a>
