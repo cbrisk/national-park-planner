@@ -24,6 +24,16 @@ app.get('/api/parks/:state', (req, res, next) => {
     });
 });
 
+app.get('/api/parks/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  fetch(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&limit=500&api_key=${process.env.API_KEY}`, { headers: { 'User-Agent': 'Chaim' } })
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

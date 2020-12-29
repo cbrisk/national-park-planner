@@ -4,6 +4,7 @@ import Footer from './components/footer';
 import Home from './pages/home';
 import ParkList from './pages/park-list';
 import StateForm from './pages/state-form';
+import ParkDetails from './pages/park-details';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -39,7 +40,10 @@ export default class App extends React.Component {
     } else if (route.path === 'state-form') {
       return <StateForm getState={this.getStateCode} />;
     } else if (route.path === 'parks-by-state') {
-      return <ParkList stateCode={this.state.stateCode} path={this.state.route.path} />;
+      return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
+    } else if (route.path === 'parks') {
+      const parkCode = route.params.get('parkCode');
+      return <ParkDetails parkCode={parkCode} />;
     }
   }
 
