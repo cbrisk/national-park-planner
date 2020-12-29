@@ -17,7 +17,7 @@ export default class ParkDetails extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          park: data.data[0],
+          park: data,
           isLoading: false
         });
       })
