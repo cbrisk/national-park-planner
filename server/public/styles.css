@@ -42,6 +42,10 @@ a.a-footer {
   text-decoration: none;
 }
 
+p{
+  font-size: .8rem;
+}
+
 button:hover,
 a:hover {
   cursor: pointer;
@@ -112,7 +116,7 @@ li:last-child {
 }
 
 .park-info {
-  min-height: 350px;
+  min-height: 280px;
 }
 
 .select-state {
@@ -127,4 +131,8 @@ li:last-child {
 
 .title {
   font-size: 1.2rem;
+}
+
+.active-tab {
+  border: 2px solid #255f82;
 }

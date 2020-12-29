@@ -7,7 +7,8 @@ export default class ParkDetails extends React.Component {
     this.state = {
       park: '',
       isLoading: true,
-      path: ''
+      path: '',
+      tab: ''
     };
   }
 
@@ -31,14 +32,26 @@ export default class ParkDetails extends React.Component {
     const { description, weatherInfo, images } = this.state.park;
     const { route } = this.props;
     if (route.params.get('tab') === 'description') {
+      this.setState({
+        tab: 'description'
+      });
       return (
-      <p className="mx-3">{description}</p>
+      <p className="mx-3 fs-1">{description}</p>
       );
     } else if (route.params.get('tab') === 'weather') {
+      this.setState({
+        tab: 'weather'
+      });
       return (
-        <p className="mx-3">{weatherInfo}</p>
+        <p className="mx-3 fs-5">{weatherInfo}</p>
       );
     } else if (route.params.get('tab') === 'photos' && images.length) {
+      this.setState({
+        tab: 'photos'
+      });
+      if (!images.length) {
+        return <span className="text-danger my-2">No image found</span>
+      }
       return (
         <ul>
           {
@@ -52,8 +65,6 @@ export default class ParkDetails extends React.Component {
           }
         </ul>
       );
-    } else if (route.params.get('tab') === 'photos' && !images.length) {
-      return <span className="text-danger my-2">No image found</span>
     }
   }
 
@@ -64,7 +75,7 @@ export default class ParkDetails extends React.Component {
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <div className="d-flex justify-content-between py-3 mx-3">
+        <div className="d-flex justify-content-between py-3 mx-4 margin-bottom">
           <h3 className="blue title">{fullName}</h3>
           <h3 className="blue title">{states}</h3>
         </div>
@@ -73,7 +84,7 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className={className}>
           <div className="d-flex justify-content-center my-4">
-            <a className="nav-link tab active" href={`${this.state.path}&tab=description`}>Description</a>
+            <a className="nav-link tab" href={`${this.state.path}&tab=description`}>Description</a>
             <a className="nav-link tab" href={`${this.state.path}&tab=weather`}>Weather</a>
             <a className="nav-link tab" href={`${this.state.path}&tab=photos`}>Photos</a>
           </div>
