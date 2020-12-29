@@ -29,7 +29,7 @@ export default class ParkDetails extends React.Component {
   }
   getClass(tab) {
     const tabSelected = this.props.tab;
-    const className = tab === tabSelected ? "nav-link tab active-tab" : "nav-link tab";
+    const className = tab === tabSelected ? "nav-link tab tab-width active-tab text-center" : "nav-link tab tab-width text-center";
     return className;
   }
 

@@ -142,3 +142,7 @@ li:last-child {
 .photos {
   max-width: 100%;
 }
+
+.tab-width {
+  width: 34%
+}
