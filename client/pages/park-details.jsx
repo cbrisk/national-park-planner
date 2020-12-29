@@ -12,11 +12,6 @@ export default class ParkDetails extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('hashchange', event => {
-      this.setState({
-        route: parseRoute(window.location.hash)
-      });
-    });
     const { parkCode } = this.props;
     fetch(`/api/parks/parkCode/${parkCode}`)
       .then(response => response.json())
@@ -34,13 +29,14 @@ export default class ParkDetails extends React.Component {
 
   renderPage() {
     const { description, weatherInfo, images } = this.state.park;
+    const { route } = this.props;
     if (route.params.get('tab') === 'description') {
       return (
-      <p>{description}</p>
+      <p className="mx-3">{description}</p>
       );
     } else if (route.params.get('tab') === 'weather') {
       return (
-        <p>{weatherInfo}</p>
+        <p className="mx-3">{weatherInfo}</p>
       );
     } else if (route.params.get('tab') === 'photos' && images.length) {
       return (
@@ -48,16 +44,16 @@ export default class ParkDetails extends React.Component {
           {
             images.map((image, index) => {
               return (
-                <li key={index}>
-                  <img src={image.url} alt="Park image failed to load" />
+                <li key={index} className="pb-3">
+                  <img src={image.url} className="park-img" alt="Park image failed to load" />
                 </li>
               );
             })
           }
         </ul>
       );
-    } else {
-      return <span className="text-danger my-2">No image found</span>;
+    } else if (route.params.get('tab') === 'photos' && !images.length) {
+      return <span className="text-danger my-2">No image found</span>
     }
   }
 
@@ -77,11 +73,13 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className={className}>
           <div className="d-flex justify-content-center my-4">
-            <a className="nav-link tab active" href={`${this.state.path}?tab=description`}>Description</a>
-            <a className="nav-link tab" href={`${this.state.path}?tab=weather`}>Weather</a>
-            <a className="nav-link tab" href={`${this.state.path}?tab=photos`}>Photos</a>
+            <a className="nav-link tab active" href={`${this.state.path}&tab=description`}>Description</a>
+            <a className="nav-link tab" href={`${this.state.path}&tab=weather`}>Weather</a>
+            <a className="nav-link tab" href={`${this.state.path}&tab=photos`}>Photos</a>
           </div>
+          {this.renderPage()}
         </div>
+
       </main>
     );
   }

@@ -43,7 +43,7 @@ export default class App extends React.Component {
       return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
-      return <ParkDetails parkCode={parkCode}/>;
+      return <ParkDetails parkCode={parkCode} route={this.state.route}/>;
     }
   }
 
