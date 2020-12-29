@@ -4,7 +4,7 @@ function Park(props) {
   const { fullName, states, images } = props.park;
   let element;
   if (images.length) {
-    element = <img src={images[0].url} className="park-img" alt="Park image failed to load "></img>;
+    element = <img src={images[0].url} className="park-img" alt="Park image failed to load"></img>;
   } else {
     element = <span className="text-danger my-2">No image found</span>;
   }
@@ -34,7 +34,7 @@ export default class ParkList extends React.Component {
 
   componentDidMount() {
     const { stateCode, path } = this.props;
-    const url = path === 'all-parks' ? '/api/parks' : `/api/parks/${stateCode}`;
+    const url = path === 'all-parks' ? '/api/parks' : `/api/parks/stateCode/${stateCode}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {

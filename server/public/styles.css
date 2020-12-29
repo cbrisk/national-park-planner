@@ -102,7 +102,7 @@ li:last-child {
   border-bottom: 2px solid #66e6f4;
 }
 
-.state-form {
+.state-form, .park-info {
   width: 90%;
   margin: 0 auto;
   border: 2px solid #66e6f4;
@@ -113,4 +113,12 @@ li:last-child {
   font-size: 1.5rem;
   border: 1px solid #255f82;
   border-radius: 4px;
+}
+.tab {
+  border: 1px solid #255f82;
+  border-radius: 4px;
+}
+
+.title {
+  font-size: 1.3rem;
 }
