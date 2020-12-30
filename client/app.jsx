@@ -5,6 +5,7 @@ import Home from './pages/home';
 import ParkList from './pages/park-list';
 import StateForm from './pages/state-form';
 import ParkDetails from './pages/park-details';
+import ParkActivities from './pages/park-activities';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -43,6 +44,9 @@ export default class App extends React.Component {
       return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
+      if (route.path.contains('activities')) {
+        return <ParkActivities parkCode={parkCode} />;
+      }
       const tab = route.params.get('tab');
       return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
     }

@@ -6,8 +6,7 @@ export default class ParkDetails extends React.Component {
     super(props);
     this.state = {
       park: '',
-      isLoading: true,
-      path: ''
+      isLoading: true
     };
   }
 
@@ -70,12 +69,19 @@ export default class ParkDetails extends React.Component {
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <div className="d-flex justify-content-between py-3 mx-4 margin-bottom">
+        <div className="d-flex justify-content-between py-3 mx-4 mb-3">
           <h3 className="blue title">{fullName}</h3>
           <h3 className="blue title">{states}</h3>
         </div>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
+        </div>
+        <div className="mx-4 mb-4">
+          <button type="button" className="btn dark-blue">
+            <a href={`#parks/activities/?parkCode=${this.props.parkCode}`}>
+              Things to do
+            </a>
+          </button>
         </div>
         <div className={className}>
           <div className="d-flex justify-content-center mb-4">
