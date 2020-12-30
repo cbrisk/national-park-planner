@@ -5,7 +5,7 @@ function Activity(props) {
 
   return (
     <div className="form-check">
-      <input className="form-check-input" type="checkbox" value={name} id={id}></input>
+      <input className="form-check-input" type="checkbox" value={name} id={id} onChange={() => props.handleCheck(event)}></input>
       <label className="form-check-label" htmlFor={id}>
         {name}
       </label>
@@ -18,8 +18,44 @@ export default class ParkActivities extends React.Component {
     super(props);
     this.state = {
       park: null,
-      isLoading: true
+      isLoading: true,
+      itinerary: []
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const copy = this.state.itinerary.slice();
+    if (event.target.checked) {
+      copy.push(event.target.value);
+    } else {
+      const index = copy.findIndex(event.target.value);
+      copy.splice(index, 1);
+    }
+    this.setState({
+      itinerary: copy
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    location.hash = '#';
+    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 };
+    fetch('/api/parks/itineraries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => response.json())
+      .then(data => {
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   componentDidMount() {
@@ -50,6 +86,7 @@ export default class ParkActivities extends React.Component {
           <Activity
             key={activity.id}
             activity={activity}
+            handleCheck={this.handleChange}
           />
         );
       });
@@ -67,7 +104,7 @@ export default class ParkActivities extends React.Component {
         </div>
         <div className={className}>
           <h6>Add to Itinerary:</h6>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             {element}
             <div className="d-flex justify-content-center">
               <button className="btn dark-blue my-3" type="submit">
