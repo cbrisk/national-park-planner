@@ -34,18 +34,21 @@ h3 {
 h4 {
   font-size: 1.5rem;
 }
+
 ul {
   list-style: none;
   max-width: 95%;
   margin: 0 auto;
 }
+
 a.a-footer {
   font-size: 1.5rem;
   text-decoration: none;
 }
 
-p{
-  font-size: .8rem;
+p,
+label {
+  font-size: 0.8rem;
 }
 
 button:hover,
@@ -110,7 +113,8 @@ li:last-child {
   border-bottom: 2px solid #66e6f4;
 }
 
-.state-form, .park-info {
+.state-form,
+.park-info {
   width: 90%;
   margin: 0 auto;
   border: 2px solid #66e6f4;
@@ -126,6 +130,7 @@ li:last-child {
   border: 1px solid #255f82;
   border-radius: 4px;
 }
+
 .tab {
   border: 1px solid #255f82;
   width: calc(100% / 3);

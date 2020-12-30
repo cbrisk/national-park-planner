@@ -39,7 +39,7 @@ export default class ParkActivities extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info px-3 d-none' : 'park-info px-3';
+    const className = this.state.isLoading ? 'park-info px-3 py-4 d-none' : 'park-info px-3 py-4';
     let fullName;
     let element;
     if (this.state.park) {

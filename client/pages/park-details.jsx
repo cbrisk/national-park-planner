@@ -35,11 +35,11 @@ export default class ParkDetails extends React.Component {
     const tabSelected = this.props.tab;
     if (tabSelected === 'description') {
       return (
-      <p className="mx-3 fs-1">{description}</p>
+      <p className="mx-3">{description}</p>
       );
     } else if (tabSelected === 'weather') {
       return (
-        <p className="mx-3 fs-5">{weatherInfo}</p>
+        <p className="mx-3">{weatherInfo}</p>
       );
     } else if (tabSelected === 'photos') {
       if (!images.length) {
