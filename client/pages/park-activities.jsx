@@ -5,9 +5,9 @@ function Activity(props) {
 
   return (
     <div className="form-check">
-      <input className="form-check-input" type="checkbox" value={activity.name} id={activity.id}></input>
-      <label class="form-check-label" htmlFor={activity.id}>
-        {activity.name}
+      <input className="form-check-input" type="checkbox" value={name} id={id}></input>
+      <label className="form-check-label" htmlFor={id}>
+        {name}
       </label>
     </div>
   );
@@ -17,7 +17,7 @@ export default class ParkActivities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      park: '',
+      park: null,
       isLoading: true
     };
   }
@@ -39,10 +39,24 @@ export default class ParkActivities extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? "park-info d-none" : "park-info";
-    const { activities, fullName } = this.state.park;
+    const className = this.state.isLoading ? 'park-info px-3 d-none' : 'park-info px-3';
+    let fullName;
+    let element;
+    if (this.state.park) {
+      const activities = this.state.park.activities;
+      fullName = this.state.park.fullName;
+      element = activities.map(activity => {
+        return (
+          <Activity
+            key={activity.id}
+            activity={activity}
+          />
+        );
+      });
+    }
+
     return (
-      <main className="light-blue">
+      <main className="light-blue pb-3">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
         <div className="m-3 text-center">
           <h3 className="blue title">{fullName}</h3>
@@ -52,18 +66,9 @@ export default class ParkActivities extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <h4>Add to Itinerary:</h4>
+          <h6>Add to Itinerary:</h6>
           <form>
-            {
-              activities.map(activity => {
-                return (
-                  <Activity
-                    key={activity.id}
-                    activity={activity}
-                  />
-                );
-              })
-            }
+            {element}
           </form>
         </div>
       </main>
