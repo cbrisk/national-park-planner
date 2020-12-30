@@ -78,7 +78,7 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className="mx-4 mb-4">
           <button type="button" className="btn dark-blue">
-            <a href={`#parks/activities/?parkCode=${this.props.parkCode}`}>
+            <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
               Things to do
             </a>
           </button>

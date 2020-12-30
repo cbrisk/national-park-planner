@@ -42,11 +42,11 @@ export default class App extends React.Component {
       return <StateForm getState={this.getStateCode} />;
     } else if (route.path === 'parks-by-state') {
       return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
+    } else if (route.path === 'parks/activities') {
+      const parkCode = route.params.get('parkCode');
+      return <ParkActivities parkCode={parkCode} />;
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
-      if (route.path.contains('activities')) {
-        return <ParkActivities parkCode={parkCode} />;
-      }
       const tab = route.params.get('tab');
       return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
     }
