@@ -64,13 +64,10 @@ app.post('/api/parks/itineraries', (req, res, next) => {
       });
       const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
 
-      db.query(sql)
+      return db.query(sql)
         .then(result => {
-
+          res.sendStatus(201);
         })
-        .catch(err => {
-          next(err);
-        });
     })
     .catch(err => {
       next(err);
