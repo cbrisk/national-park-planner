@@ -1,13 +1,11 @@
 import React from 'react';
-import parseRoute from '../lib/parse-route';
 
 export default class ParkDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      park: '',
-      isLoading: true,
-      path: ''
+      park: [],
+      isLoading: true
     };
   }
 
@@ -25,9 +23,10 @@ export default class ParkDetails extends React.Component {
         console.error('Error:', error);
       });
   }
+
   getClass(tab) {
     const tabSelected = this.props.tab;
-    const className = tab === tabSelected ? "nav-link tab active-tab text-center" : "nav-link tab text-center";
+    const className = tab === tabSelected ? 'nav-link tab active-tab text-center' : 'nav-link tab text-center';
     return className;
   }
 
@@ -36,15 +35,15 @@ export default class ParkDetails extends React.Component {
     const tabSelected = this.props.tab;
     if (tabSelected === 'description') {
       return (
-      <p className="mx-3 fs-1">{description}</p>
+      <p className="mx-3">{description}</p>
       );
     } else if (tabSelected === 'weather') {
       return (
-        <p className="mx-3 fs-5">{weatherInfo}</p>
+        <p className="mx-3">{weatherInfo}</p>
       );
     } else if (tabSelected === 'photos') {
       if (!images.length) {
-        return <span className="text-danger my-2">No image found</span>
+        return <span className="text-danger my-2">No image found</span>;
       }
       return (
         <ul className="px-0">
@@ -64,13 +63,13 @@ export default class ParkDetails extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? "park-info d-none" : "park-info";
+    const className = this.state.isLoading ? 'd-none' : '';
     const { fullName, states } = this.state.park;
     const path = this.props.path;
     return (
-      <main className="light-blue">
+      <main className="light-blue pb-3">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <div className="d-flex justify-content-between py-3 mx-4 margin-bottom">
+        <div className="d-flex justify-content-between py-3 mx-4 mb-3">
           <h3 className="blue title">{fullName}</h3>
           <h3 className="blue title">{states}</h3>
         </div>
@@ -78,14 +77,22 @@ export default class ParkDetails extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="d-flex justify-content-center mb-4">
-            <a className={this.getClass("description")} href={`${path}&tab=description`}>Description</a>
-            <a className={this.getClass("weather")} href={`${path}&tab=weather`}>Weather</a>
-            <a className={this.getClass("photos")} href={`${path}&tab=photos`}>Photos</a>
+          <div className="mx-4 mb-4">
+            <button type="button" className="btn dark-blue">
+              <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
+                Things to do
+              </a>
+            </button>
           </div>
-          {this.renderPage()}
+          <div className="park-info">
+            <div className="d-flex justify-content-center mb-4">
+              <a className={this.getClass('description')} href={`${path}&tab=description`}>Description</a>
+              <a className={this.getClass('weather')} href={`${path}&tab=weather`}>Weather</a>
+              <a className={this.getClass('photos')} href={`${path}&tab=photos`}>Photos</a>
+            </div>
+            {this.renderPage()}
+          </div>
         </div>
-
       </main>
     );
   }
