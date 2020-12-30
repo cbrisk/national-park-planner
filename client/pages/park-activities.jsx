@@ -69,6 +69,11 @@ export default class ParkActivities extends React.Component {
           <h6>Add to Itinerary:</h6>
           <form>
             {element}
+            <div className="d-flex justify-content-center">
+              <button className="btn dark-blue my-3" type="submit">
+                Create Itinerary
+              </button>
+            </div>
           </form>
         </div>
       </main>
