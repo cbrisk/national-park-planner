@@ -114,11 +114,15 @@ li:last-child {
 }
 
 .state-form,
-.park-info {
+.park-info,
+.park-details {
   width: 90%;
   margin: 0 auto;
-  border: 2px solid #66e6f4;
   background-color: white;
+}
+
+.park-info, .state-form {
+  border: 1px solid #255f82;
 }
 
 .park-info {
