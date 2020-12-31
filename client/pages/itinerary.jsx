@@ -3,7 +3,6 @@ import React from 'react';
 function ItineraryItem(props) {
   const { itineraryItemId, thingToDo, completed } = props.activity;
 
-
   return (
     <li className="list-group-item border-0 py-1">
       <div className="form-check">
@@ -45,25 +44,15 @@ export default class Itinerary extends React.Component {
       });
   }
 
-
-
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
     let parkName;
-    let element;
+    const activities = this.state.itinerary;
     if (this.state.itinerary.length) {
-      const activities = this.state.itinerary;
       parkName = this.state.itinerary[0].parkName;
-      element = activities.map(activity => {
-        return (
-          <ItineraryItem
-            key={activity.itineraryItemId}
-            activity={activity}
-          />
-        );
-      });
     }
+
     return (
       <main className="light-blue pb-3">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -76,7 +65,16 @@ export default class Itinerary extends React.Component {
         </div>
         <div className={className}>
           <ul className="px-0">
-            {element}
+            {
+              activities.map(activity => {
+                return (
+                  <ItineraryItem
+                    key={activity.itineraryItemId}
+                    activity={activity}
+                  />
+                );
+              })
+            }
           </ul>
         </div>
       </main>
