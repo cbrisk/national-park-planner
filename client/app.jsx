@@ -54,7 +54,7 @@ export default class App extends React.Component {
     } else if (route.path === 'itineraries') {
       return <ItineraryList/>
     } else if (route.path === 'itinerariesById') {
-      const parkCode = route.params.get('id');
+      const itineraryId = route.params.get('id');
       return <Itinerary itineraryId={itineraryId}/>
     }
   }

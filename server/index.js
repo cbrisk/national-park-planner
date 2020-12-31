@@ -119,11 +119,6 @@ app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
     .catch(err => {
       next(err);
     });
-})
-
-app.patch('/api/parks/itineraries/:itineraryItemId') {
-  const itineraryId = parseInt(req.params.itineraryId);
-
 });
 
 app.use(errorMiddleware);
