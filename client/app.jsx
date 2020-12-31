@@ -7,6 +7,7 @@ import StateForm from './pages/state-form';
 import ParkDetails from './pages/park-details';
 import ParkActivities from './pages/park-activities';
 import ItineraryList from './pages/itinerary-list';
+import Itinerary from './pages/itinerary';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -52,6 +53,9 @@ export default class App extends React.Component {
       return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
     } else if (route.path === 'itineraries') {
       return <ItineraryList/>
+    } else if (route.path === 'itinerariesById') {
+      const parkCode = route.params.get('id');
+      return <Itinerary itineraryId={itineraryId}/>
     }
   }
 

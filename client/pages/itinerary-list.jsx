@@ -44,7 +44,7 @@ export default class ItineraryList extends React.Component {
                   return (
                     <li className="list-group-item itinerary-item d-flex justify-content-between" key={index}>
                       {park.parkName}
-                      <a href={``}><i className="fas fa-chevron-right blue"></i></a>
+                      <a href={`#itinerariesById?id=${park.itineraryId}`}><i className="fas fa-chevron-right blue"></i></a>
                     </li>
                   );
                 })

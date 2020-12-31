@@ -87,7 +87,7 @@ app.post('/api/parks/itineraries', (req, res, next) => {
 app.get('/api/parks/itineraries/:userId', (req, res, next) => {
   const userId = parseInt(req.params.userId);
   const sql = `
-    select "parkName"
+    select "parkName", "itineraryId"
       from "parks"
       join "itineraries" using ("parkCode")
       where "userId" = $1
@@ -100,7 +100,31 @@ app.get('/api/parks/itineraries/:userId', (req, res, next) => {
     .catch(err => {
       next(err);
     });
+});
+
+app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
+  const itineraryId = parseInt(req.params.itineraryId);
+  const sql = `
+    select "thingToDo", "completed", "parkName", "itineraryItemId"
+      from "itineraryItems"
+      join "itineraries" using ("itineraryId")
+      join "parks" using ("parkCode")
+      where "itineraryId" = $1
+  `;
+  const params = [itineraryId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
 })
+
+app.patch('/api/parks/itineraries/:itineraryItemId') {
+  const itineraryId = parseInt(req.params.itineraryId);
+
+});
 
 app.use(errorMiddleware);
 

@@ -51,7 +51,7 @@ export default class ParkActivities extends React.Component {
       .catch(error => {
         console.error('Error:', error);
       });
-    location.hash = '#';
+    location.hash = '#itineraries';
   }
 
   componentDidMount() {
