@@ -42,7 +42,7 @@ export default class ItineraryList extends React.Component {
               {
                 this.state.itineraries.map((park, index) => {
                   return (
-                    <li className="list-group-item itinerary-item d-flex justify-content-between" key={index}>
+                    <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>
                       {park.parkName}
                       <div className="d-flex align-items-center">
                         <a href={`#itinerariesById?id=${park.itineraryId}`}><i className="fas fa-chevron-right blue"></i></a>
