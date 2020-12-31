@@ -84,7 +84,7 @@ export default class ParkDetails extends React.Component {
               </a>
             </button>
           </div>
-          <div className="park-info">
+          <div className="park-details">
             <div className="d-flex justify-content-center mb-4">
               <a className={this.getClass('description')} href={`${path}&tab=description`}>Description</a>
               <a className={this.getClass('weather')} href={`${path}&tab=weather`}>Weather</a>
