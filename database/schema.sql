@@ -32,8 +32,7 @@ CREATE TABLE "reviews" (
 
 CREATE TABLE "visited" (
 	"userId" serial NOT NULL,
-	"parkCode" TEXT NOT NULL,
-	CONSTRAINT "visited_pk" PRIMARY KEY ("userId","parkCode")
+	"parkCode" TEXT NOT NULL
 ) WITH (
   OIDS=FALSE
 );
@@ -63,11 +62,22 @@ CREATE TABLE "itineraryItems" (
 
 
 
+CREATE TABLE "parks" (
+	"parkCode" TEXT NOT NULL,
+	"parkName" TEXT NOT NULL,
+	CONSTRAINT "parks_pk" PRIMARY KEY ("parkCode")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
 
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
 ALTER TABLE "visited" ADD CONSTRAINT "visited_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
 ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk1" FOREIGN KEY ("parkCode") REFERENCES "parks"("parkCode");
 
 ALTER TABLE "itineraryItems" ADD CONSTRAINT "itineraryItems_fk0" FOREIGN KEY ("itineraryId") REFERENCES "itineraries"("itineraryId");

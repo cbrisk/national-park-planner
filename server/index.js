@@ -47,32 +47,60 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
 });
 
 app.post('/api/parks/itineraries', (req, res, next) => {
-  const { parkCode } = req.body;
-  const userId = parseInt(req.body.userId);
+  const { parkCode, parkName } = req.body;
   const sql = `
-    insert into "itineraries" ("userId", "parkCode")
+    insert into "parks" ("parkCode", "parkName")
     values ($1, $2)
-    returning "itineraryId"
+    on conflict ("parkCode")
+    do nothing;
   `;
-  const params = [userId, parkCode];
+  const params = [parkCode, parkName];
   db.query(sql, params)
     .then(result => {
-      const { itineraryId } = result.rows[0];
-      const { itinerary } = req.body;
-      const newItinerary = itinerary.map(itineraryItem => {
-        return [itineraryId, itineraryItem, false];
-      });
-      const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
-
-      return db.query(sql)
+      const userId = parseInt(req.body.userId);
+      const sql = `
+        insert into "itineraries" ("userId", "parkCode")
+        values ($1, $2)
+        returning "itineraryId"
+      `;
+      const params = [userId, parkCode];
+      return db.query(sql, params)
         .then(result => {
-          res.sendStatus(201);
+          const { itineraryId } = result.rows[0];
+          const { itinerary } = req.body;
+          const newItinerary = itinerary.map(itineraryItem => {
+            return [itineraryId, itineraryItem, false];
+          });
+          const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
+
+          return db.query(sql)
+            .then(result => {
+              res.sendStatus(201);
+            })
         })
     })
     .catch(err => {
       next(err);
     });
 });
+
+app.get('/api/parks/itineraries/:userId', (req, res, next) => {
+  const userId = parseInt(req.params.userId);
+  const sql = `
+    select "parkName"
+      from "parks"
+      join "itineraries" using ("parkCode")
+      where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+})
 
 app.use(errorMiddleware);
 
