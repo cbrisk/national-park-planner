@@ -3,9 +3,13 @@ import React from 'react';
 function Activity(props) {
   const { name, id } = props.activity;
 
+  const handleChange = event => {
+    const { checked } = event.target;
+    props.onCheck({ name, checked });
+  };
   return (
     <div className="form-check">
-      <input className="form-check-input" type="checkbox" value={name} id={id}></input>
+      <input className="form-check-input" type="checkbox" value={name} id={id} onChange={handleChange}></input>
       <label className="form-check-label" htmlFor={id}>
         {name}
       </label>
@@ -18,8 +22,36 @@ export default class ParkActivities extends React.Component {
     super(props);
     this.state = {
       park: null,
-      isLoading: true
+      isLoading: true,
+      itinerary: []
     };
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleCheck(activity) {
+    const itinerary = activity.checked
+      ? this.state.itinerary.concat(activity.name)
+      : this.state.itinerary.filter(activity => activity !== activity.name);
+    this.setState({
+      itinerary: itinerary
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 };
+    fetch('/api/parks/itineraries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    location.hash = '#';
   }
 
   componentDidMount() {
@@ -50,6 +82,7 @@ export default class ParkActivities extends React.Component {
           <Activity
             key={activity.id}
             activity={activity}
+            onCheck={this.handleCheck}
           />
         );
       });
@@ -67,8 +100,13 @@ export default class ParkActivities extends React.Component {
         </div>
         <div className={className}>
           <h6>Add to Itinerary:</h6>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             {element}
+            <div className="d-flex justify-content-center">
+              <button className="btn dark-blue my-3" type="submit">
+                Create Itinerary
+              </button>
+            </div>
           </form>
         </div>
       </main>

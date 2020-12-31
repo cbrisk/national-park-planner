@@ -1,9 +1,18 @@
 require('dotenv/config');
 const express = require('express');
 const fetch = require('node-fetch');
+const pg = require('pg');
+const format = require('pg-format');
 const errorMiddleware = require('./error-middleware');
 
 const app = express();
+
+const jsonMiddleware = express.json();
+app.use(jsonMiddleware);
+
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL
+});
 
 app.get('/api/parks', (req, res, next) => {
   fetch(`https://developer.nps.gov/api/v1/parks?limit=500&api_key=${process.env.API_KEY}`, { headers: { 'User-Agent': 'Chaim' } })
@@ -29,8 +38,36 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
   fetch(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&limit=500&api_key=${process.env.API_KEY}`, { headers: { 'User-Agent': 'Chaim' } })
     .then(response => response.json())
     .then(data => {
-      const [ park ] = data.data;
+      const [park] = data.data;
       res.json(park);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/parks/itineraries', (req, res, next) => {
+  const { parkCode } = req.body;
+  const userId = parseInt(req.body.userId);
+  const sql = `
+    insert into "itineraries" ("userId", "parkCode")
+    values ($1, $2)
+    returning "itineraryId"
+  `;
+  const params = [userId, parkCode];
+  db.query(sql, params)
+    .then(result => {
+      const { itineraryId } = result.rows[0];
+      const { itinerary } = req.body;
+      const newItinerary = itinerary.map(itineraryItem => {
+        return [itineraryId, itineraryItem, false];
+      });
+      const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
+
+      return db.query(sql)
+        .then(result => {
+          res.sendStatus(201);
+        })
     })
     .catch(err => {
       next(err);
