@@ -10,7 +10,8 @@ function ItineraryItem(props) {
           id={itineraryItemId}
           type="checkbox"
           name={thingToDo}
-          defaultChecked={completed}
+          checked={completed}
+          onChange={() => props.onCheck(itineraryItemId)}
           className="form-check-input"/>
         <label className="form-check-label" htmlFor={itineraryItemId}>
           {thingToDo}
@@ -27,6 +28,32 @@ export default class Itinerary extends React.Component {
       isLoading: true,
       itinerary: []
     };
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+
+  handleCheck(itineraryItemId) {
+    const index = this.state.itinerary.findIndex(item => item.itineraryItemId === itineraryItemId);
+    const completed = this.state.itinerary[index].completed;
+    const newStatus = { completed: !completed };
+
+    fetch(`api/parks/itineraries/${itineraryItemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newStatus)
+    })
+      .then(response => response.json())
+      .then(data => {
+        const copyItinerary = this.state.itinerary.slice();
+        copyItinerary[index] = data;
+        this.setState({
+          itinerary: copyItinerary
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   componentDidMount() {
@@ -64,6 +91,7 @@ export default class Itinerary extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
+          <h6 className="px-4">Check Items as Completed:</h6>
           <ul className="px-0">
             {
               activities.map(activity => {
@@ -71,6 +99,7 @@ export default class Itinerary extends React.Component {
                   <ItineraryItem
                     key={activity.itineraryItemId}
                     activity={activity}
+                    onCheck={this.handleCheck}
                   />
                 );
               })
