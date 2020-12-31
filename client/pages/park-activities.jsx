@@ -3,9 +3,13 @@ import React from 'react';
 function Activity(props) {
   const { name, id } = props.activity;
 
+  const handleChange = event => {
+    const { checked } = event.target;
+    props.onCheck({ name, checked });
+  };
   return (
     <div className="form-check">
-      <input className="form-check-input" type="checkbox" value={name} id={id} onChange={() => props.handleCheck(event)}></input>
+      <input className="form-check-input" type="checkbox" value={name} id={id} onChange={handleChange}></input>
       <label className="form-check-label" htmlFor={id}>
         {name}
       </label>
@@ -21,26 +25,21 @@ export default class ParkActivities extends React.Component {
       isLoading: true,
       itinerary: []
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    const copy = this.state.itinerary.slice();
-    if (event.target.checked) {
-      copy.push(event.target.value);
-    } else {
-      const index = copy.findIndex(event.target.value);
-      copy.splice(index, 1);
-    }
+  handleCheck(activity) {
+    const itinerary = activity.checked
+      ? this.state.itinerary.concat(activity.name)
+      : this.state.itinerary.filter(activity => activity !== activity.name);
     this.setState({
-      itinerary: copy
+      itinerary: itinerary
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    location.hash = '#';
     const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 };
     fetch('/api/parks/itineraries', {
       method: 'POST',
@@ -49,13 +48,10 @@ export default class ParkActivities extends React.Component {
       },
       body: JSON.stringify(body)
     })
-      .then(response => response.json())
-      .then(data => {
-
-      })
       .catch(error => {
         console.error('Error:', error);
       });
+    location.hash = '#';
   }
 
   componentDidMount() {
@@ -86,7 +82,7 @@ export default class ParkActivities extends React.Component {
           <Activity
             key={activity.id}
             activity={activity}
-            handleCheck={this.handleChange}
+            onCheck={this.handleCheck}
           />
         );
       });
