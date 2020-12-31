@@ -40,7 +40,7 @@ export default class ParkActivities extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 };
+    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 , parkName: this.state.park.fullName };
     fetch('/api/parks/itineraries', {
       method: 'POST',
       headers: {
@@ -51,7 +51,7 @@ export default class ParkActivities extends React.Component {
       .catch(error => {
         console.error('Error:', error);
       });
-    location.hash = '#';
+    location.hash = '#itineraries';
   }
 
   componentDidMount() {
