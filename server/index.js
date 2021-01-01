@@ -141,6 +141,23 @@ app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
     });
 });
 
+app.post('/api/reviews', (req, res, next) => {
+  const { parkCode, content } = req.body;
+  const userId = parseInt(req.body.userId);
+  const sql = `
+        insert into "reviews" ("userId", "parkCode", "content")
+        values ($1, $2, $3)
+      `;
+  const params = [userId, parkCode, content];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
