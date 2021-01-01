@@ -162,9 +162,10 @@ app.post('/api/reviews', (req, res, next) => {
 app.get('/api/reviews/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
   const sql = `
-    select "content", "parkName"
+    select "content", "parkName", "userFirstName" || ' ' || "userLastName" as "name"
       from "reviews"
       join "parks" using ("parkCode")
+      join "users" using ("userId")
       where "parkCode" = $1
   `;
   const params = [parkCode];

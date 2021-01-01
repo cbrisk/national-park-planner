@@ -5,7 +5,6 @@ export default class ParkReviews extends React.Component {
     super(props);
     this.state = {
       reviews: [],
-      parkName: '',
       isLoading: true
     };
   }
@@ -17,7 +16,6 @@ export default class ParkReviews extends React.Component {
       .then(data => {
         this.setState({
           reviews: data,
-          parkName: data,
           isLoading: false
         });
       })
@@ -29,11 +27,17 @@ export default class ParkReviews extends React.Component {
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
-
+    let parkName;
+    if (this.state.reviews.length) {
+      parkName = this.state.reviews[0].parkName;
+    }
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <h3 className="pb-3 text-center blue">{}</h3>
+        <div className="m-3 text-center">
+          <h3 className="blue title">{parkName}</h3>
+          <h5 className="blue">Reviews</h5>
+        </div>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
         </div>
@@ -41,13 +45,11 @@ export default class ParkReviews extends React.Component {
           <div className="mb-4">
             <ul className="list-group">
               {
-                this.state.itineraries.map((park, index) => {
+                this.state.reviews.map((review, index) => {
                   return (
-                    <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>
-                      {park.parkName}
-                      <div className="d-flex align-items-center">
-                        <a href={`#itinerariesById?id=${park.itineraryId}`}><i className="fas fa-chevron-right blue"></i></a>
-                      </div>
+                    <li className="list-group-item itinerary-item" key={index}>
+                      <h5 className="medium-blue">{review.name}</h5>
+                      <p>{review.content}</p>
                     </li>
                   );
                 })
