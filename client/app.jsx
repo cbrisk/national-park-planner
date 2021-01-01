@@ -8,7 +8,10 @@ import ParkDetails from './pages/park-details';
 import ParkActivities from './pages/park-activities';
 import ItineraryList from './pages/itinerary-list';
 import Itinerary from './pages/itinerary';
+import ReviewDashboard from './pages/review-dashboard';
+import NewReview from './pages/new-review';
 import parseRoute from './lib/parse-route';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -56,6 +59,12 @@ export default class App extends React.Component {
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
       return <Itinerary itineraryId={itineraryId}/>
+    } else if (route.path === 'review-dashboard') {
+      const parkCode = route.params.get('parkCode');
+      return <ReviewDashboard parkCode={parkCode} />;
+    } else if (route.path === 'new-review') {
+      const parkCode = route.params.get('parkCode');
+      return <NewReview parkCode={parkCode} />;
     }
   }
 
