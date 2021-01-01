@@ -21,6 +21,17 @@ export default class NewReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const body = { parkCode: this.props.parkCode, userId: 1, content: this.state.value };
+    fetch('/api/reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     location.hash = '#';
   }
 
