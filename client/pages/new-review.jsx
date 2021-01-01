@@ -29,10 +29,12 @@ export default class NewReview extends React.Component {
       },
       body: JSON.stringify(body)
     })
+      .then(() => {
+        location.hash = '#';
+      })
       .catch(error => {
         console.error('Error:', error);
       });
-    location.hash = '#';
   }
 
   componentDidMount() {
@@ -51,14 +53,10 @@ export default class NewReview extends React.Component {
   }
 
   render() {
-    const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
+    const spinner = this.state.isLoading ? 'spinner-border mb-3 blue' : 'spinner-border mb-3 blue d-none';
     const className = this.state.isLoading
       ? 'park-info d-flex justify-content-center rounded d-none'
       : 'park-info d-flex justify-content-center rounded';
-    let parkName;
-    if (this.state.parkName) {
-      parkName = this.state.parkName;
-    }
 
     return (
       <main className="light-blue">
