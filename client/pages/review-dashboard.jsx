@@ -39,10 +39,13 @@ export default class ReviewDashboard extends React.Component {
           <h3 className="blue review-title">{parkName}</h3>
           <h5 className="blue">Review Dashboard</h5>
         </div>
+        <div className="d-flex justify-content-center">
+          <div className={spinner} role="status"></div>
+        </div>
         <div className={className}>
           <div className="d-flex flex-column align-items-center">
             <button type="button" className="btn dark-blue">
-              <a href={`new-review?parkCode=${this.props.parkCode}`}>
+              <a href={`#new-review?parkCode=${this.props.parkCode}`}>
                 Write a new Review
               </a>
             </button>
