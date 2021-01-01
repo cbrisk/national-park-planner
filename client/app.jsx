@@ -10,8 +10,8 @@ import ItineraryList from './pages/itinerary-list';
 import Itinerary from './pages/itinerary';
 import ReviewDashboard from './pages/review-dashboard';
 import NewReview from './pages/new-review';
+import ParkReviews from './pages/park-reviews';
 import parseRoute from './lib/parse-route';
-
 
 export default class App extends React.Component {
   constructor(props) {
@@ -55,16 +55,19 @@ export default class App extends React.Component {
       const tab = route.params.get('tab');
       return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
     } else if (route.path === 'itineraries') {
-      return <ItineraryList/>
+      return <ItineraryList/>;
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
-      return <Itinerary itineraryId={itineraryId}/>
+      return <Itinerary itineraryId={itineraryId}/>;
     } else if (route.path === 'review-dashboard') {
       const parkCode = route.params.get('parkCode');
       return <ReviewDashboard parkCode={parkCode} />;
     } else if (route.path === 'new-review') {
       const parkCode = route.params.get('parkCode');
       return <NewReview parkCode={parkCode} />;
+    } else if (route.path === 'reviews') {
+      const parkCode = route.params.get('parkCode');
+      return <ParkReviews parkCode={parkCode} />;
     }
   }
 
