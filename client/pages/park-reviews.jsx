@@ -12,12 +12,17 @@ export default class ParkReviews extends React.Component {
   componentDidMount() {
     const { parkCode } = this.props;
     fetch(`api/reviews/${parkCode}`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          reviews: data,
-          isLoading: false
-        });
+      .then(response => {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.indexOf('application/json') !== -1) {
+          return response.json()
+            .then(data => {
+              this.setState({
+                reviews: data,
+                isLoading: false
+              });
+            });
+        }
       })
       .catch(error => {
         console.error('Error:', error);
@@ -28,9 +33,21 @@ export default class ParkReviews extends React.Component {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
     let parkName;
+    let element;
     if (this.state.reviews.length) {
       parkName = this.state.reviews[0].parkName;
+      element = this.state.reviews.map((review, index) => {
+        return (
+          <li className="list-group-item itinerary-item" key={index}>
+            <h5 className="medium-blue">{review.name}</h5>
+            <p>{review.content}</p>
+          </li>
+        );
+      });
+    } else {
+      element = <span className="text-center">No reviews found for this park</span>;
     }
+
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -44,16 +61,7 @@ export default class ParkReviews extends React.Component {
         <div className={className}>
           <div className="mb-4">
             <ul className="list-group">
-              {
-                this.state.reviews.map((review, index) => {
-                  return (
-                    <li className="list-group-item itinerary-item" key={index}>
-                      <h5 className="medium-blue">{review.name}</h5>
-                      <p>{review.content}</p>
-                    </li>
-                  );
-                })
-              }
+              { element }
             </ul>
           </div>
         </div>
