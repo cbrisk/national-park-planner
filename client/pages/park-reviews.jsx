@@ -12,7 +12,7 @@ export default class ParkReviews extends React.Component {
 
   componentDidMount() {
     const { parkCode } = this.props;
-    fetch(``)
+    fetch(`api/reviews/${parkCode}`)
       .then(response => response.json())
       .then(data => {
         this.setState({

@@ -40,6 +40,17 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     .then(data => {
       const [park] = data.data;
       res.json(park);
+      const sql = `
+        insert into "parks" ("parkCode", "parkName")
+        values ($1, $2)
+        on conflict ("parkCode")
+        do nothing;
+      `;
+      const params = [parkCode, park.fullName];
+      return db.query(sql, params)
+        .then(result => {
+          res.sendStatus(201);
+        });
     })
     .catch(err => {
       next(err);
@@ -47,36 +58,26 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
 });
 
 app.post('/api/parks/itineraries', (req, res, next) => {
-  const { parkCode, parkName } = req.body;
+  const { parkCode } = req.body;
+  const userId = parseInt(req.body.userId);
   const sql = `
-    insert into "parks" ("parkCode", "parkName")
+    insert into "itineraries" ("userId", "parkCode")
     values ($1, $2)
-    on conflict ("parkCode")
-    do nothing;
+    returning "itineraryId"
   `;
-  const params = [parkCode, parkName];
+  const params = [userId, parkCode];
   db.query(sql, params)
     .then(result => {
-      const userId = parseInt(req.body.userId);
-      const sql = `
-        insert into "itineraries" ("userId", "parkCode")
-        values ($1, $2)
-        returning "itineraryId"
-      `;
-      const params = [userId, parkCode];
-      return db.query(sql, params)
-        .then(result => {
-          const { itineraryId } = result.rows[0];
-          const { itinerary } = req.body;
-          const newItinerary = itinerary.map(itineraryItem => {
-            return [itineraryId, itineraryItem, false];
-          });
-          const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
+      const { itineraryId } = result.rows[0];
+      const { itinerary } = req.body;
+      const newItinerary = itinerary.map(itineraryItem => {
+        return [itineraryId, itineraryItem, false];
+      });
+      const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
 
-          return db.query(sql)
-            .then(result => {
-              res.sendStatus(201);
-            });
+      return db.query(sql)
+        .then(result => {
+          res.sendStatus(201);
         });
     })
     .catch(err => {
@@ -157,6 +158,24 @@ app.post('/api/reviews', (req, res, next) => {
       next(err);
     });
 });
+
+app.get('/api/reviews/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  const sql = `
+    select "content", "parkName"
+      from "reviews"
+      join "parks" using ("parkCode")
+      where "parkCode" = $1
+  `;
+  const params = [parkCode];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+})
 
 app.use(errorMiddleware);
 
