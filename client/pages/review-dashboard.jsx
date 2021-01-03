@@ -6,7 +6,7 @@ export default class ReviewDashboard extends React.Component {
     this.state = {
       parkName: '',
       isLoading: true
-    }
+    };
   }
 
   componentDidMount() {
@@ -26,7 +26,9 @@ export default class ReviewDashboard extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info px-3 py-4 d-none' : 'park-info px-3 py-4';
+    const className = this.state.isLoading
+      ? 'div-height d-flex flex-column px-3 py-4 d-none'
+      : 'div-height d-flex flex-column px-3 py-4';
     let parkName;
     if (this.state.parkName) {
       parkName = this.state.parkName;
@@ -43,10 +45,15 @@ export default class ReviewDashboard extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="d-flex flex-column align-items-center">
-            <button type="button" className="btn dark-blue">
+          <div className="d-flex flex-column align-items-center justify-content-around div-height">
+            <button type="button" className="btn dark-blue margin-bottom">
               <a href={`#new-review?parkCode=${this.props.parkCode}`}>
                 Write a new Review
+              </a>
+            </button>
+            <button type="button" className="btn btn-padding dark-blue">
+              <a href={`#reviews?parkCode=${this.props.parkCode}`}>
+                View Reviews
               </a>
             </button>
           </div>

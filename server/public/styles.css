@@ -72,7 +72,9 @@ button:link {
   color: inherit;
 }
 
-i.home-icon, .itinerary-title, .review-title {
+i.home-icon,
+.itinerary-title,
+.review-title {
   font-size: 1.6rem;
 }
 
@@ -125,12 +127,17 @@ li:last-child {
   background-color: white;
 }
 
-.park-info, .state-form {
+.park-info,
+.state-form {
   border: 1px solid #255f82;
 }
 
 .park-info {
   min-height: 280px;
+}
+
+.div-height {
+  height: 180px;
 }
 
 .select-state {
@@ -155,10 +162,12 @@ li:last-child {
 .photos {
   max-width: 100%;
 }
+
 .itinerary-item {
   border: none;
   border-bottom: 2px solid #66e6f4;
 }
+
 .form-width {
   width: 90%;
 }
