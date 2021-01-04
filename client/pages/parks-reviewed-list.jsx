@@ -10,7 +10,7 @@ export default class ParksReviewedList extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/reviews`)
+    fetch('/api/reviews')
       .then(response => {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.indexOf('application/json') !== -1) {
@@ -32,7 +32,7 @@ export default class ParksReviewedList extends React.Component {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
     let element;
-    if (this.state.reviews.length) {
+    if (this.state.parksReviewed.length) {
       element = this.state.parksReviewed.map((park, index) => {
         return (
           <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>

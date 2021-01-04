@@ -183,7 +183,7 @@ app.get('/api/reviews', (req, res, next) => {
     select "parkName", "parkCode"
       from "reviews"
       join "parks" using ("parkCode")
-      group by "parkName"
+      group by "parkName", "parkCode"
   `;
   db.query(sql)
     .then(result => {
@@ -193,7 +193,6 @@ app.get('/api/reviews', (req, res, next) => {
       next(err);
     });
 });
-
 
 app.use(errorMiddleware);
 

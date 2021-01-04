@@ -12,6 +12,7 @@ import ReviewDashboard from './pages/review-dashboard';
 import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
 import parseRoute from './lib/parse-route';
+import ParksReviewedList from './pages/parks-reviewed-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -68,6 +69,8 @@ export default class App extends React.Component {
     } else if (route.path === 'reviews') {
       const parkCode = route.params.get('parkCode');
       return <ParkReviews parkCode={parkCode} />;
+    } else if (route.path === 'parks-reviewed') {
+      return <ParksReviewedList/>;
     }
   }
 
