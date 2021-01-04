@@ -11,17 +11,12 @@ export default class ParksReviewedList extends React.Component {
 
   componentDidMount() {
     fetch('/api/reviews')
-      .then(response => {
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.indexOf('application/json') !== -1) {
-          return response.json()
-            .then(data => {
-              this.setState({
-                parksReviewed: data,
-                isLoading: false
-              });
-            });
-        }
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          parksReviewed: data,
+          isLoading: false
+        });
       })
       .catch(error => {
         console.error('Error:', error);

@@ -5,8 +5,10 @@ export default class ParkDetails extends React.Component {
     super(props);
     this.state = {
       park: [],
+      visited: false,
       isLoading: true
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -17,6 +19,30 @@ export default class ParkDetails extends React.Component {
         this.setState({
           park: data,
           isLoading: false
+        });
+        return fetch(`/api/visited/${parkCode}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length) {
+              this.setState({
+                visited: true
+              });
+            }
+          });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  handleClick() {
+    const { parkCode } = this.props;
+    fetch(`/api/visited/${parkCode}`, {
+      method: 'POST'
+    })
+      .then(() => {
+        this.setState({
+          visited: true
         });
       })
       .catch(error => {
@@ -35,11 +61,11 @@ export default class ParkDetails extends React.Component {
     const tabSelected = this.props.tab;
     if (tabSelected === 'description') {
       return (
-      <p className="mx-3">{description}</p>
+      <p className="mx-3 pb-3">{description}</p>
       );
     } else if (tabSelected === 'weather') {
       return (
-        <p className="mx-3">{weatherInfo}</p>
+        <p className="mx-3 pb-3">{weatherInfo}</p>
       );
     } else if (tabSelected === 'photos') {
       if (!images.length) {
@@ -66,6 +92,15 @@ export default class ParkDetails extends React.Component {
     const className = this.state.isLoading ? 'd-none' : '';
     const { fullName, states } = this.state.park;
     const path = this.props.path;
+    let visited;
+    let disabled;
+    if (this.state.visited) {
+      visited = '✔ Visited!';
+      disabled = true;
+    } else {
+      visited = 'Mark as visited';
+      disabled = false;
+    }
     return (
       <main className="light-blue pb-3">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -78,15 +113,18 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className={className}>
           <div className="mx-4 mb-4 d-flex justify-content-between">
-            <button type="button" className="btn dark-blue">
+            <button type="button" className="btn dark-blue btn-width-sm">
               <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
                 Things to do
               </a>
             </button>
-            <button type="button" className="btn dark-blue">
+            <button type="button" className="btn dark-blue btn-width-sm">
               <a href={`#review-dashboard?parkCode=${this.props.parkCode}`}>
                 Reviews
               </a>
+            </button>
+            <button type="button" disabled={disabled} onClick={this.handleClick} className="btn dark-blue btn-width-sm">
+                { visited }
             </button>
           </div>
           <div className="park-details">

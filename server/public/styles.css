@@ -99,12 +99,6 @@ li:last-child {
   color: #255f82;
 }
 
-.btn-padding {
-  padding-left: 1.4rem;
-  padding-right: 1.4rem;
-  font-size: 1.1rem;
-}
-
 .margin-bottom {
   margin-bottom: 5rem;
 }
@@ -170,4 +164,13 @@ li:last-child {
 
 .form-width {
   width: 90%;
+}
+
+.btn-width {
+  width: 65%;
+}
+
+.btn-width-sm {
+  width: 30%;
+  font-size: 0.6rem;
 }

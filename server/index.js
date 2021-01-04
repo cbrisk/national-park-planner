@@ -39,7 +39,6 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     .then(response => response.json())
     .then(data => {
       const [park] = data.data;
-      res.json(park);
       const sql = `
         insert into "parks" ("parkCode", "parkName")
         values ($1, $2)
@@ -49,7 +48,7 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
       const params = [parkCode, park.fullName];
       return db.query(sql, params)
         .then(result => {
-          res.sendStatus(201);
+          res.json(park);
         });
     })
     .catch(err => {
@@ -188,6 +187,42 @@ app.get('/api/reviews', (req, res, next) => {
   db.query(sql)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.get('/api/visited/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  const userId = 1;
+  const sql = `
+    select "parkCode"
+      from "visited"
+      where "parkCode" = $1
+      and "userId" = $2
+  `;
+  const params = [parkCode, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/visited/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  const userId = 1;
+  const sql = `
+        insert into "visited" ("userId", "parkCode")
+        values ($1, $2)
+      `;
+  const params = [userId, parkCode];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
     })
     .catch(err => {
       next(err);
