@@ -39,7 +39,6 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     .then(response => response.json())
     .then(data => {
       const [park] = data.data;
-      res.json(park);
       const sql = `
         insert into "parks" ("parkCode", "parkName")
         values ($1, $2)
@@ -49,7 +48,7 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
       const params = [parkCode, park.fullName];
       return db.query(sql, params)
         .then(result => {
-          res.sendStatus(201);
+          res.json(park);
         });
     })
     .catch(err => {
