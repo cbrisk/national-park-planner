@@ -30,7 +30,7 @@ export default class NewReview extends React.Component {
       body: JSON.stringify(body)
     })
       .then(() => {
-        location.hash = '#';
+        location.hash = `#reviews?parkCode=${this.props.parkCode}`;
       })
       .catch(error => {
         console.error('Error:', error);
