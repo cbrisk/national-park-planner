@@ -176,7 +176,23 @@ app.get('/api/reviews/:parkCode', (req, res, next) => {
     .catch(err => {
       next(err);
     });
-})
+});
+
+app.get('/api/reviews', (req, res, next) => {
+  const sql = `
+    select "parkName", "parkCode"
+      from "reviews"
+      join "parks" using ("parkCode")
+      group by "parkName", "parkCode"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 app.use(errorMiddleware);
 
