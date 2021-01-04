@@ -212,6 +212,24 @@ app.get('/api/visited/:parkCode', (req, res, next) => {
     });
 });
 
+app.get('/api/visited', (req, res, next) => {
+  const userId = 1;
+  const sql = `
+    select "parkCode", "parkName"
+      from "visited"
+      join "parks" using ("parkCode")
+      where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.post('/api/visited/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
   const userId = 1;
