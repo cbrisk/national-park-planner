@@ -195,17 +195,34 @@ app.get('/api/reviews', (req, res, next) => {
 
 app.get('/api/visited/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
-  userId = 1;
+  const userId = 1;
   const sql = `
     select "parkCode"
       from "visited"
       where "parkCode" = $1
-      and "userId = $2
+      and "userId" = $2
   `;
   const params = [parkCode, userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/visited/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  const userId = 1;
+  const sql = `
+        insert into "visited" ("userId", "parkCode")
+        values ($1, $2)
+      `;
+  const params = [userId, parkCode];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
     })
     .catch(err => {
       next(err);

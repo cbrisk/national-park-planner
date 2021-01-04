@@ -8,6 +8,7 @@ export default class ParkDetails extends React.Component {
       visited: false,
       isLoading: true
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +20,7 @@ export default class ParkDetails extends React.Component {
           park: data,
           isLoading: false
         });
-        return fetch(`/api/visited/parkCode/${parkCode}`)
+        return fetch(`/api/visited/${parkCode}`)
           .then(response => response.json())
           .then(data => {
             if (data.length) {
@@ -28,6 +29,21 @@ export default class ParkDetails extends React.Component {
               });
             }
           });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  handleClick() {
+    const { parkCode } = this.props;
+    fetch(`/api/visited/${parkCode}`, {
+      method: 'POST'
+    })
+      .then(() => {
+        this.setState({
+          visited: true
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -45,11 +61,11 @@ export default class ParkDetails extends React.Component {
     const tabSelected = this.props.tab;
     if (tabSelected === 'description') {
       return (
-      <p className="mx-3">{description}</p>
+      <p className="mx-3 pb-3">{description}</p>
       );
     } else if (tabSelected === 'weather') {
       return (
-        <p className="mx-3">{weatherInfo}</p>
+        <p className="mx-3 pb-3">{weatherInfo}</p>
       );
     } else if (tabSelected === 'photos') {
       if (!images.length) {
@@ -107,7 +123,7 @@ export default class ParkDetails extends React.Component {
                 Reviews
               </a>
             </button>
-            <button type="button" disabled={disabled} className="btn dark-blue btn-width-sm">
+            <button type="button" disabled={disabled} onClick={this.handleClick} className="btn dark-blue btn-width-sm">
                 { visited }
             </button>
           </div>
