@@ -174,3 +174,15 @@ li:last-child {
   width: 30%;
   font-size: 0.6rem;
 }
+
+@media screen and (min-width: 667px) {
+  .btn-width {
+    width: 35%;
+  }
+}
+
+@media screen and (min-width: 667px) {
+  .btn-width-sm {
+    width: 20%;
+  }
+}
