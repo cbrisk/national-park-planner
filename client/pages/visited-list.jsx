@@ -32,6 +32,9 @@ export default class VisitedList extends React.Component {
         return (
           <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>
             {park.parkName}
+            <div className="d-flex align-items-center">
+              <a href={`#parks?parkCode=${park.parkCode}&tab=description`}><i className="fas fa-chevron-right blue"></i></a>
+            </div>
           </li>
         );
       });
