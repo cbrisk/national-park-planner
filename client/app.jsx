@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/header';
 import Footer from './components/footer';
+import parseRoute from './lib/parse-route';
 import Home from './pages/home';
 import ParkList from './pages/park-list';
 import StateForm from './pages/state-form';
@@ -11,8 +12,8 @@ import Itinerary from './pages/itinerary';
 import ReviewDashboard from './pages/review-dashboard';
 import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
-import parseRoute from './lib/parse-route';
 import ParksReviewedList from './pages/parks-reviewed-list';
+import VisitedList from './pages/visited-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -71,6 +72,8 @@ export default class App extends React.Component {
       return <ParkReviews parkCode={parkCode} />;
     } else if (route.path === 'parks-reviewed') {
       return <ParksReviewedList/>;
+    } else if (route.path === 'parks-visited') {
+      return <VisitedList/>;
     }
   }
 

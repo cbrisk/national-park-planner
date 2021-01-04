@@ -112,7 +112,7 @@ export default class ParkDetails extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="mx-4 mb-4 d-flex justify-content-between">
+          <div className="mx-4 mb-4 d-flex justify-content-around">
             <button type="button" className="btn dark-blue btn-width-sm">
               <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
                 Things to do
