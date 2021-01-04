@@ -169,3 +169,8 @@ li:last-child {
 .btn-width {
   width: 65%;
 }
+
+.btn-width-sm {
+  width: 30%;
+  font-size: .8rem;
+}

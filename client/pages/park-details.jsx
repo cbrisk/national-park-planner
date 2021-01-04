@@ -78,12 +78,12 @@ export default class ParkDetails extends React.Component {
         </div>
         <div className={className}>
           <div className="mx-4 mb-4 d-flex justify-content-between">
-            <button type="button" className="btn dark-blue">
+            <button type="button" className="btn dark-blue btn-width-sm">
               <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
                 Things to do
               </a>
             </button>
-            <button type="button" className="btn dark-blue">
+            <button type="button" className="btn dark-blue btn-width-sm">
               <a href={`#review-dashboard?parkCode=${this.props.parkCode}`}>
                 Reviews
               </a>
