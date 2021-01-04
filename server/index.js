@@ -193,6 +193,25 @@ app.get('/api/reviews', (req, res, next) => {
     });
 });
 
+app.get('/api/visited/:parkCode', (req, res, next) => {
+  const parkCode = req.params.parkCode;
+  userId = 1;
+  const sql = `
+    select "parkCode"
+      from "visited"
+      where "parkCode" = $1
+      and "userId = $2
+  `;
+  const params = [parkCode, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

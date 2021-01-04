@@ -5,6 +5,7 @@ export default class ParkDetails extends React.Component {
     super(props);
     this.state = {
       park: [],
+      visited: false,
       isLoading: true
     };
   }
@@ -18,6 +19,15 @@ export default class ParkDetails extends React.Component {
           park: data,
           isLoading: false
         });
+        return fetch(`/api/visited/parkCode/${parkCode}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length) {
+              this.setState({
+                visited: true
+              });
+            }
+          });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -66,6 +76,15 @@ export default class ParkDetails extends React.Component {
     const className = this.state.isLoading ? 'd-none' : '';
     const { fullName, states } = this.state.park;
     const path = this.props.path;
+    let visited;
+    let disabled;
+    if (this.state.visited) {
+      visited = '✔ Visited!';
+      disabled = true;
+    } else {
+      visited = 'Mark as visited';
+      disabled = false;
+    }
     return (
       <main className="light-blue pb-3">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -87,6 +106,9 @@ export default class ParkDetails extends React.Component {
               <a href={`#review-dashboard?parkCode=${this.props.parkCode}`}>
                 Reviews
               </a>
+            </button>
+            <button type="button" disabled={disabled} className="btn dark-blue btn-width-sm">
+                { visited }
             </button>
           </div>
           <div className="park-details">
