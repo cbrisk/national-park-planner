@@ -34,7 +34,7 @@ export default class ParkReviews extends React.Component {
       element = this.state.reviews.map((review, index) => {
         return (
           <li className="list-group-item itinerary-item" key={index}>
-            <h5 className="medium-blue">{review.name}</h5>
+            <h5 className="medium-blue">{review.userFullName}</h5>
             <p>{review.content}</p>
           </li>
         );

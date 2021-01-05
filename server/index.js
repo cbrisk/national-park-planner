@@ -4,6 +4,8 @@ const fetch = require('node-fetch');
 const pg = require('pg');
 const format = require('pg-format');
 const errorMiddleware = require('./error-middleware');
+const ClientError = require('./client-error');
+const argon2 = require('argon2');
 
 const app = express();
 
@@ -161,7 +163,7 @@ app.post('/api/reviews', (req, res, next) => {
 app.get('/api/reviews/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
   const sql = `
-    select "content", "parkName", "userFirstName" || ' ' || "userLastName" as "name"
+    select "content", "parkName", "userFullName"
       from "reviews"
       join "parks" using ("parkCode")
       join "users" using ("userId")
@@ -241,6 +243,31 @@ app.post('/api/visited/:parkCode', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.sendStatus(201);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/sign-up', (req, res, next) => {
+  const { username, password, name } = req.body;
+  if (!username || !password || !name) {
+    throw new ClientError(400, 'username, password, and name are required fields');
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        insert into "users" ("userFullName", "username", "password")
+        values ($1, $2, $3)
+        returning "userId"
+      `;
+      const params = [name, username, hashedPassword];
+      return db.query(sql, params)
+        .then(result => {
+          const [userId] = result.rows;
+          res.status(201).json(userId);
+        });
     })
     .catch(err => {
       next(err);
