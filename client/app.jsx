@@ -21,16 +21,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      stateCode: '',
       user: null
     };
-    this.getStateCode = this.getStateCode.bind(this);
-  }
-
-  getStateCode(code) {
-    this.setState({
-      stateCode: code
-    });
   }
 
   componentDidMount() {
@@ -46,13 +38,14 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Home user={this.state.user}/>;
     } else if (route.path === 'sign-up') {
-      return <Auth/>
+      return <Auth/>;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
-      return <StateForm getState={this.getStateCode} />;
+      return <StateForm />;
     } else if (route.path === 'parks-by-state') {
-      return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
+      const stateCode = route.params.get('stateCode');
+      return <ParkList stateCode={stateCode} path={this.state.route.path}/>;
     } else if (route.path === 'parks/activities') {
       const parkCode = route.params.get('parkCode');
       return <ParkActivities parkCode={parkCode} />;
