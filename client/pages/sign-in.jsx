@@ -1,11 +1,10 @@
 import React from 'react';
 import Redirect from '../components/redirect';
 
-export default class SignUp extends React.Component {
+export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
       username: '',
       password: ''
     };
@@ -20,7 +19,7 @@ export default class SignUp extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch('/api/sign-up', {
+    fetch('/api/sign-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -43,13 +42,9 @@ export default class SignUp extends React.Component {
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <h3 className="pb-3 text-center blue">Register</h3>
+        <h3 className="pb-3 text-center blue">Sign In</h3>
         <div className="state-form d-flex justify-content-center rounded">
           <form className="d-flex flex-column align-items-center pt-3" onSubmit={this.handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">Full Name</label>
-              <input required id="name" type="text" name="name" onChange={this.handleChange} className="form-control" />
-            </div>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Username</label>
               <input required id="username" type="text" name="username" onChange={this.handleChange} className="form-control" />
@@ -59,12 +54,9 @@ export default class SignUp extends React.Component {
               <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="btn dark-blue mb-2" type="submit">
-                Register
+              <button className="btn dark-blue mb-5" type="submit">
+                Sign In
               </button>
-            </div>
-            <div className="pb-4">
-              <a href="#sign-in" className="text-decoration-none text-primary">Already have an account? Sign In</a>
             </div>
           </form>
         </div>

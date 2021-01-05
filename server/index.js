@@ -198,7 +198,7 @@ app.get('/api/reviews', (req, res, next) => {
 
 app.get('/api/visited/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
-  const userId = 1;
+  const userId = 11;
   const sql = `
     select "parkCode"
       from "visited"
@@ -216,7 +216,7 @@ app.get('/api/visited/:parkCode', (req, res, next) => {
 });
 
 app.get('/api/visited', (req, res, next) => {
-  const userId = 1;
+  const userId = 11;
   const sql = `
     select "parkCode", "parkName"
       from "visited"
@@ -274,10 +274,23 @@ app.post('/api/sign-up', (req, res, next) => {
           }
           return authenticateUser(username, password, db)
             .then(result => {
-              console.log(result);
               res.status(201).json(result);
             });
         });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  authenticateUser(username, password, db)
+    .then(result => {
+      res.status(201).json(result);
     })
     .catch(err => {
       next(err);

@@ -4,9 +4,6 @@ const ClientError = require('./client-error');
 
 function authenticateUser(username, password, db) {
   return new Promise((resolve, reject) => {
-    if (!username || !password) {
-      throw new ClientError(401, 'invalid login');
-    }
     const sql = `
     select "userId",
            "hashedPassword"

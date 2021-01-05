@@ -15,6 +15,7 @@ import ParkReviews from './pages/park-reviews';
 import ParksReviewedList from './pages/parks-reviewed-list';
 import VisitedList from './pages/visited-list';
 import SignUp from './pages/sign-up';
+import SignIn from './pages/sign-in';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    window.localStorage.removeItem('jwt');
     window.addEventListener('hashchange', event => {
       this.setState({
         route: parseRoute(window.location.hash)
@@ -47,6 +49,8 @@ export default class App extends React.Component {
       return <Home user={this.state.user}/>;
     } else if (route.path === 'sign-up') {
       return <SignUp user={this.state.user} updateUser={this.updateUser}/>;
+    } else if (route.path === 'sign-in') {
+      return <SignIn user={this.state.user} updateUser={this.updateUser} />;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
