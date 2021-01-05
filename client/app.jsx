@@ -14,21 +14,15 @@ import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
 import ParksReviewedList from './pages/parks-reviewed-list';
 import VisitedList from './pages/visited-list';
+import Auth from './pages/auth';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      stateCode: ''
+      user: null
     };
-    this.getStateCode = this.getStateCode.bind(this);
-  }
-
-  getStateCode(code) {
-    this.setState({
-      stateCode: code
-    });
   }
 
   componentDidMount() {
@@ -42,13 +36,16 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home />;
+      return <Home user={this.state.user}/>;
+    } else if (route.path === 'sign-up') {
+      return <Auth/>;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
-      return <StateForm getState={this.getStateCode} />;
+      return <StateForm />;
     } else if (route.path === 'parks-by-state') {
-      return <ParkList stateCode={this.state.stateCode} path={this.state.route.path}/>;
+      const stateCode = route.params.get('stateCode');
+      return <ParkList stateCode={stateCode} path={this.state.route.path}/>;
     } else if (route.path === 'parks/activities') {
       const parkCode = route.params.get('parkCode');
       return <ParkActivities parkCode={parkCode} />;
