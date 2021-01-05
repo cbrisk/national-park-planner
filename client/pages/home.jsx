@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default function Home(props) {
+
+  if (!props.user) return <Redirect to="sign-up" />;
   return (
     <>
       <main className="home">

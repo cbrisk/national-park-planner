@@ -14,13 +14,15 @@ import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
 import ParksReviewedList from './pages/parks-reviewed-list';
 import VisitedList from './pages/visited-list';
+import Auth from './pages/auth';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      stateCode: ''
+      stateCode: '',
+      user: null
     };
     this.getStateCode = this.getStateCode.bind(this);
   }
@@ -42,7 +44,9 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home />;
+      return <Home user={this.state.user}/>;
+    } else if (route.path === 'sign-up') {
+      return <Auth/>
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
