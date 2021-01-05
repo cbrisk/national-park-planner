@@ -6,6 +6,7 @@ const format = require('pg-format');
 const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const argon2 = require('argon2');
+const authenticateUser = require('./authenticate-user');
 
 const app = express();
 
@@ -258,15 +259,24 @@ app.post('/api/sign-up', (req, res, next) => {
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        insert into "users" ("userFullName", "username", "password")
+        insert into "users" ("userFullName", "username", "hashedPassword")
         values ($1, $2, $3)
+        on conflict ("username")
+        do nothing
         returning "userId"
       `;
       const params = [name, username, hashedPassword];
       return db.query(sql, params)
         .then(result => {
-          const [userId] = result.rows;
-          res.status(201).json(userId);
+          const [ userId ] = result.rows;
+          if (!userId) {
+            throw new ClientError(400, 'the username you entered cannot be used');
+          }
+          return authenticateUser(username, password, db)
+            .then(result => {
+              console.log(result);
+              res.status(201).json(result);
+            });
         });
     })
     .catch(err => {

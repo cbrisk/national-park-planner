@@ -23,6 +23,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       user: null
     };
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
@@ -33,12 +34,19 @@ export default class App extends React.Component {
     });
   }
 
+  updateUser(userId, token) {
+    window.localStorage.setItem('jwt', token);
+    this.setState({
+      user: userId
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
       return <Home user={this.state.user}/>;
     } else if (route.path === 'sign-up') {
-      return <SignUp/>;
+      return <SignUp user={this.state.user} updateUser={this.updateUser}/>;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {

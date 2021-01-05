@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from '../components/redirect';
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -26,12 +27,19 @@ export default class SignUp extends React.Component {
       },
       body: JSON.stringify(this.state)
     })
+      .then(result => {
+        console.log(result);
+        const { userId } = result.user;
+        const { token } = result;
+        this.props.updateUser(userId, token);
+      })
       .catch(error => {
         console.error('Error:', error);
       });
   }
 
   render() {
+    if (this.props.user) return <Redirect to="" />;
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
