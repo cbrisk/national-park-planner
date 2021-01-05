@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Auth extends React.Component {
+export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,9 +51,12 @@ export default class Auth extends React.Component {
               <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="btn dark-blue mb-5" type="submit">
+              <button className="btn dark-blue mb-1" type="submit">
                 Register
               </button>
+            </div>
+            <div className="pb-3">
+              <a href="#sign-in" className="text-decoration-none text-primary">Sign In</a>
             </div>
           </form>
         </div>

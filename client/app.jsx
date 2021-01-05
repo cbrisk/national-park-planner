@@ -14,7 +14,7 @@ import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
 import ParksReviewedList from './pages/parks-reviewed-list';
 import VisitedList from './pages/visited-list';
-import Auth from './pages/auth';
+import SignUp from './pages/sign-up';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Home user={this.state.user}/>;
     } else if (route.path === 'sign-up') {
-      return <Auth/>;
+      return <SignUp/>;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
