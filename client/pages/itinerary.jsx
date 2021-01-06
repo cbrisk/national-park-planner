@@ -40,7 +40,8 @@ export default class Itinerary extends React.Component {
     fetch(`api/parks/itineraries/${itineraryItemId}`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': this.props.token
       },
       body: JSON.stringify(newStatus)
     })

@@ -84,7 +84,7 @@ export default class App extends React.Component {
       return <ItineraryList token={this.state.token} signOut={this.signOut}/>;
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
-      return <Itinerary itineraryId={itineraryId} signOut={this.signOut}/>;
+      return <Itinerary token={this.state.token} itineraryId={itineraryId} signOut={this.signOut}/>;
     } else if (route.path === 'review-dashboard') {
       const parkCode = route.params.get('parkCode');
       return <ReviewDashboard parkCode={parkCode} signOut={this.signOut}/>;

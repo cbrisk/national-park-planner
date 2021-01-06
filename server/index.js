@@ -79,26 +79,6 @@ app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
     });
 });
 
-app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
-  const itineraryItemId = parseInt(req.params.itineraryItemId);
-  const { completed } = req.body;
-  const sql = `
-    update "itineraryItems"
-       set "completed" = $1
-     where "itineraryItemId" = $2
-     returning *
-  `;
-  const params = [completed, itineraryItemId];
-  db.query(sql, params)
-    .then(result => {
-      const [itineraryItem] = result.rows;
-      res.json(itineraryItem);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
 app.get('/api/reviews/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
   const sql = `
@@ -294,6 +274,26 @@ app.post('/api/visited/:parkCode', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.sendStatus(201);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
+  const itineraryItemId = parseInt(req.params.itineraryItemId);
+  const { completed } = req.body;
+  const sql = `
+    update "itineraryItems"
+       set "completed" = $1
+     where "itineraryItemId" = $2
+     returning *
+  `;
+  const params = [completed, itineraryItemId];
+  db.query(sql, params)
+    .then(result => {
+      const [itineraryItem] = result.rows;
+      res.json(itineraryItem);
     })
     .catch(err => {
       next(err);
