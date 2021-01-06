@@ -24,7 +24,10 @@ export default class StateForm extends React.Component {
   render() {
     return (
       <main className="light-blue">
-        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <div className="d-flex justify-content-between p-3">
+          <a href="#"><i className="fas fa-home home-icon medium-blue"></i></a>
+          <i className="fas fa-sign-out-alt home-icon medium-blue" onClick={this.props.signOut}></i>
+        </div>
         <h3 className="pb-3 text-center blue">Parks by State</h3>
         <div className="state-form d-flex justify-content-center rounded">
           <form className="d-flex flex-column align-items-center" onSubmit={this.handleSubmit}>
