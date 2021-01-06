@@ -29,9 +29,8 @@ export default class SignUp extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const { userId } = data.user;
         const { token } = data;
-        this.props.updateUser(userId, token);
+        this.props.updateUser(token);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -42,8 +41,7 @@ export default class SignUp extends React.Component {
     if (this.props.token) return <Redirect to="" />;
     return (
       <main className="light-blue">
-        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
-        <h3 className="pb-3 text-center blue">Register</h3>
+        <h3 className="py-3 text-center blue">Register</h3>
         <div className="state-form d-flex justify-content-center rounded">
           <form className="d-flex flex-column align-items-center pt-3" onSubmit={this.handleSubmit}>
             <div className="mb-3">

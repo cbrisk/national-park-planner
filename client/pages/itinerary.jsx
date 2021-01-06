@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 function ItineraryItem(props) {
   const { itineraryItemId, thingToDo, completed } = props.activity;
@@ -82,7 +83,7 @@ export default class Itinerary extends React.Component {
 
     return (
       <main className="light-blue pb-3">
-        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <NavBar/>
         <div className="m-3 text-center">
           <h3 className="blue title">{parkName}</h3>
           <h5 className="blue">Itinerary</h5>

@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 function Activity(props) {
   const { name, id } = props.activity;
@@ -91,7 +92,7 @@ export default class ParkActivities extends React.Component {
 
     return (
       <main className="light-blue pb-3">
-        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <NavBar signOut={this.props.signOut} />
         <div className="m-3 text-center">
           <h3 className="blue title">{fullName}</h3>
           <h5 className="blue">Things to do</h5>

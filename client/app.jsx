@@ -16,6 +16,7 @@ import ParksReviewedList from './pages/parks-reviewed-list';
 import VisitedList from './pages/visited-list';
 import SignUp from './pages/sign-up';
 import SignIn from './pages/sign-in';
+import Redirect from './components/redirect';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class App extends React.Component {
       token: null
     };
     this.updateUser = this.updateUser.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   componentDidMount() {
@@ -47,46 +49,55 @@ export default class App extends React.Component {
     });
   }
 
+  signOut() {
+    window.localStorage.removeItem('jwt');
+    this.setState({
+      token: null
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home token={this.state.token}/>;
+      return <Home token={this.state.token} signOut={this.signOut}/>;
     } else if (route.path === 'sign-up') {
       return <SignUp token={this.state.token} updateUser={this.updateUser}/>;
     } else if (route.path === 'sign-in') {
       return <SignIn token={this.state.token} updateUser={this.updateUser} />;
+    } else if (!this.state.token) {
+      return <Redirect to="sign-up" />;
     } else if (route.path === 'all-parks') {
-      return <ParkList path={this.state.route.path}/>;
+      return <ParkList path={this.state.route.path} signOut={this.signOut}/>;
     } else if (route.path === 'state-form') {
-      return <StateForm />;
+      return <StateForm signOut={this.signOut}/>;
     } else if (route.path === 'parks-by-state') {
       const stateCode = route.params.get('stateCode');
-      return <ParkList stateCode={stateCode} path={this.state.route.path}/>;
+      return <ParkList stateCode={stateCode} path={this.state.route.path} signOut={this.signOut}/>;
     } else if (route.path === 'parks/activities') {
       const parkCode = route.params.get('parkCode');
-      return <ParkActivities parkCode={parkCode} token={this.state.token}/>;
+      return <ParkActivities token={this.state.token} parkCode={parkCode} signOut={this.signOut}/>;
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
       const tab = route.params.get('tab');
-      return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`} token={this.state.token}/>;
+      return <ParkDetails token={this.state.token} parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`} signOut={this.signOut}/>;
     } else if (route.path === 'itineraries') {
-      return <ItineraryList token={this.state.token}/>;
+      return <ItineraryList token={this.state.token} signOut={this.signOut}/>;
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
-      return <Itinerary itineraryId={itineraryId}/>;
+      return <Itinerary itineraryId={itineraryId} signOut={this.signOut}/>;
     } else if (route.path === 'review-dashboard') {
       const parkCode = route.params.get('parkCode');
-      return <ReviewDashboard parkCode={parkCode} />;
+      return <ReviewDashboard parkCode={parkCode} signOut={this.signOut}/>;
     } else if (route.path === 'new-review') {
       const parkCode = route.params.get('parkCode');
-      return <NewReview parkCode={parkCode} token={this.state.token}/>;
+      return <NewReview token={this.state.token} parkCode={parkCode} signOut={this.signOut}/>;
     } else if (route.path === 'reviews') {
       const parkCode = route.params.get('parkCode');
-      return <ParkReviews parkCode={parkCode} />;
+      return <ParkReviews parkCode={parkCode} signOut={this.signOut}/>;
     } else if (route.path === 'parks-reviewed') {
-      return <ParksReviewedList/>;
+      return <ParksReviewedList signOut={this.signOut}/>;
     } else if (route.path === 'parks-visited') {
-      return <VisitedList token={this.state.token}/>;
+      return <VisitedList token={this.state.token} signOut={this.signOut}/>;
     }
   }
 

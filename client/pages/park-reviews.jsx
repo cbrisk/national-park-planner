@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 export default class ParkReviews extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class ParkReviews extends React.Component {
 
     return (
       <main className="light-blue">
-        <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
+        <NavBar signOut={this.props.signOut} />
         <div className="m-3 text-center">
           <h3 className="blue title">{parkName}</h3>
           <h5 className="blue">Reviews</h5>
