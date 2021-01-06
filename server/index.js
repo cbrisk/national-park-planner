@@ -60,24 +60,6 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     });
 });
 
-app.get('/api/parks/itineraries', (req, res, next) => {
-  const userId = parseInt(req.params.userId);
-  const sql = `
-    select "parkName", "itineraryId"
-      from "parks"
-      join "itineraries" using ("parkCode")
-      where "userId" = $1
-  `;
-  const params = [userId];
-  db.query(sql, params)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
 app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
   const itineraryId = parseInt(req.params.itineraryId);
   const sql = `
@@ -229,7 +211,7 @@ app.post('/api/parks/itineraries', (req, res, next) => {
     });
 });
 
-app.get('/api/parks/itinerariesWithToken', (req, res, next) => {
+app.get('/api/parks/itineraries', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
     select "parkName", "itineraryId"
