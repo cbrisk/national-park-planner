@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 export default class NewReview extends React.Component {
   constructor(props) {
@@ -61,10 +62,7 @@ export default class NewReview extends React.Component {
 
     return (
       <main className="light-blue">
-        <div className="d-flex justify-content-between p-3">
-          <a href="#"><i className="fas fa-home home-icon medium-blue"></i></a>
-          <i className="fas fa-sign-out-alt home-icon medium-blue" onClick={this.props.signOut}></i>
-        </div>
+        <NavBar signOut={this.props.signOut} />
         <h3 className="pb-3 text-center blue review-title">New Review</h3>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>

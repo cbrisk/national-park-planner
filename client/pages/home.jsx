@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 import Redirect from '../components/redirect';
 
 export default function Home(props) {
@@ -7,10 +8,7 @@ export default function Home(props) {
   return (
     <>
       <main className="home">
-        <div className="d-flex justify-content-between p-3">
-          <a href="#"><i className="fas fa-home home-icon medium-blue"></i></a>
-          <i className="fas fa-sign-out-alt home-icon medium-blue" onClick={props.signOut}></i>
-        </div>
+        <NavBar signOut={props.signOut}/>
         <div className="d-flex flex-column align-items-center">
           <h3 className="my-4 medium-blue">
             Welcome

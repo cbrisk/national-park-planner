@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 function Park(props) {
   const { fullName, states, images } = props.park;
@@ -53,10 +54,7 @@ export default class ParkList extends React.Component {
     const display = this.props.stateCode ? `Parks in ${this.props.stateCode.toUpperCase()}` : 'All Parks';
     return (
       <main className="light-blue">
-        <div className="d-flex justify-content-between p-3">
-          <a href="#"><i className="fas fa-home home-icon medium-blue"></i></a>
-          <i className="fas fa-sign-out-alt home-icon medium-blue" onClick={this.props.signOut}></i>
-        </div>
+        <NavBar signOut={this.props.signOut} />
         <h3 className="pb-3 text-center blue">{display}</h3>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>

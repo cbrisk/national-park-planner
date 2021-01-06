@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navbar';
 
 export default class ItineraryList extends React.Component {
   constructor(props) {
@@ -48,10 +49,7 @@ export default class ItineraryList extends React.Component {
 
     return (
       <main className="light-blue pb-3">
-        <div className="d-flex justify-content-between p-3">
-          <a href="#"><i className="fas fa-home home-icon medium-blue"></i></a>
-          <i className="fas fa-sign-out-alt home-icon medium-blue" onClick={this.props.signOut}></i>
-        </div>
+        <NavBar signOut={this.props.signOut}/>
         <div className="d-flex justify-content-center py-3 mx-4">
           <h3 className="blue itinerary-title">Itineraries</h3>
         </div>
