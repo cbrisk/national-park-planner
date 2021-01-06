@@ -28,9 +28,8 @@ export default class SignIn extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const { userId } = data.user;
         const { token } = data;
-        this.props.updateUser(userId, token);
+        this.props.updateUser(token);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -38,7 +37,7 @@ export default class SignIn extends React.Component {
   }
 
   render() {
-    if (this.props.user) return <Redirect to="" />;
+    if (this.props.token) return <Redirect to="" />;
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>

@@ -22,13 +22,17 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      user: null
+      token: null
     };
     this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
-    window.localStorage.removeItem('jwt');
+    const localStorage = window.localStorage.getItem('jwt');
+    const token = localStorage || null;
+    this.setState({
+      token
+    });
     window.addEventListener('hashchange', event => {
       this.setState({
         route: parseRoute(window.location.hash)
@@ -36,21 +40,21 @@ export default class App extends React.Component {
     });
   }
 
-  updateUser(userId, token) {
+  updateUser(token) {
     window.localStorage.setItem('jwt', token);
     this.setState({
-      user: userId
+      token
     });
   }
 
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home user={this.state.user}/>;
+      return <Home token={this.state.token}/>;
     } else if (route.path === 'sign-up') {
-      return <SignUp user={this.state.user} updateUser={this.updateUser}/>;
+      return <SignUp token={this.state.token} updateUser={this.updateUser}/>;
     } else if (route.path === 'sign-in') {
-      return <SignIn user={this.state.user} updateUser={this.updateUser} />;
+      return <SignIn token={this.state.token} updateUser={this.updateUser} />;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path}/>;
     } else if (route.path === 'state-form') {
@@ -60,13 +64,13 @@ export default class App extends React.Component {
       return <ParkList stateCode={stateCode} path={this.state.route.path}/>;
     } else if (route.path === 'parks/activities') {
       const parkCode = route.params.get('parkCode');
-      return <ParkActivities parkCode={parkCode} />;
+      return <ParkActivities parkCode={parkCode} token={this.state.token}/>;
     } else if (route.path === 'parks') {
       const parkCode = route.params.get('parkCode');
       const tab = route.params.get('tab');
-      return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`}/>;
+      return <ParkDetails parkCode={parkCode} tab={tab} path={`#parks?parkCode=${parkCode}`} token={this.state.token}/>;
     } else if (route.path === 'itineraries') {
-      return <ItineraryList/>;
+      return <ItineraryList token={this.state.token}/>;
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
       return <Itinerary itineraryId={itineraryId}/>;
@@ -75,14 +79,14 @@ export default class App extends React.Component {
       return <ReviewDashboard parkCode={parkCode} />;
     } else if (route.path === 'new-review') {
       const parkCode = route.params.get('parkCode');
-      return <NewReview parkCode={parkCode} />;
+      return <NewReview parkCode={parkCode} token={this.state.token}/>;
     } else if (route.path === 'reviews') {
       const parkCode = route.params.get('parkCode');
       return <ParkReviews parkCode={parkCode} />;
     } else if (route.path === 'parks-reviewed') {
       return <ParksReviewedList/>;
     } else if (route.path === 'parks-visited') {
-      return <VisitedList/>;
+      return <VisitedList token={this.state.token}/>;
     }
   }
 

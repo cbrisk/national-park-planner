@@ -10,8 +10,11 @@ export default class ItineraryList extends React.Component {
   }
 
   componentDidMount() {
-    const userId = 1;
-    fetch(`/api/parks/itineraries/${userId}`)
+    fetch('/api/parks/itinerariesWithToken', {
+      headers: {
+        'X-Access-Token': this.props.token
+      }
+    })
       .then(response => response.json())
       .then(data => {
         this.setState({
@@ -55,7 +58,7 @@ export default class ItineraryList extends React.Component {
         <div className={className}>
           <div className="mb-4">
             <ul className="list-group">
-              { element  }
+              { element }
             </ul>
           </div>
         </div>

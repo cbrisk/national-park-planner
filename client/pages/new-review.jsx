@@ -21,11 +21,12 @@ export default class NewReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const body = { parkCode: this.props.parkCode, userId: 1, content: this.state.value };
+    const body = { parkCode: this.props.parkCode, content: this.state.value };
     fetch('/api/reviews', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': this.props.token
       },
       body: JSON.stringify(body)
     })

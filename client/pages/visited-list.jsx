@@ -10,7 +10,11 @@ export default class VisitedList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/visited')
+    fetch('/api/visited', {
+      headers: {
+        'X-Access-Token': this.props.token
+      }
+    })
       .then(response => response.json())
       .then(data => {
         this.setState({
