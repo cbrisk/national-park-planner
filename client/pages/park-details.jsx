@@ -20,7 +20,11 @@ export default class ParkDetails extends React.Component {
           park: data,
           isLoading: false
         });
-        return fetch(`/api/visited/${parkCode}`)
+        return fetch(`/api/visited/${parkCode}`, {
+          headers: {
+            'X-Access-Token': this.props.token
+          }
+        })
           .then(response => response.json())
           .then(data => {
             if (data.length) {
@@ -38,7 +42,10 @@ export default class ParkDetails extends React.Component {
   handleClick() {
     const { parkCode } = this.props;
     fetch(`/api/visited/${parkCode}`, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        'X-Access-Token': this.props.token
+      }
     })
       .then(() => {
         this.setState({

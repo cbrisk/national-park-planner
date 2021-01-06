@@ -40,11 +40,12 @@ export default class ParkActivities extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode, userId: 1 };
+    const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode };
     fetch('/api/parks/itineraries', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': this.props.token
       },
       body: JSON.stringify(body)
     })

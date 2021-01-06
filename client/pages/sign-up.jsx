@@ -1,6 +1,7 @@
 import React from 'react';
+import Redirect from '../components/redirect';
 
-export default class Auth extends React.Component {
+export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,12 +27,19 @@ export default class Auth extends React.Component {
       },
       body: JSON.stringify(this.state)
     })
+      .then(response => response.json())
+      .then(data => {
+        const { userId } = data.user;
+        const { token } = data;
+        this.props.updateUser(userId, token);
+      })
       .catch(error => {
         console.error('Error:', error);
       });
   }
 
   render() {
+    if (this.props.token) return <Redirect to="" />;
     return (
       <main className="light-blue">
         <a href="#"><i className="fas fa-home home-icon medium-blue m-3"></i></a>
@@ -51,9 +59,12 @@ export default class Auth extends React.Component {
               <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="btn dark-blue mb-5" type="submit">
+              <button className="btn dark-blue mb-2" type="submit">
                 Register
               </button>
+            </div>
+            <div className="pb-4">
+              <a href="#sign-in" className="text-decoration-none text-primary">Already have an account? Sign In</a>
             </div>
           </form>
         </div>

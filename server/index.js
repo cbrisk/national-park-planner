@@ -6,6 +6,8 @@ const format = require('pg-format');
 const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const argon2 = require('argon2');
+const authenticateUser = require('./authenticate-user');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const app = express();
 
@@ -58,35 +60,7 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     });
 });
 
-app.post('/api/parks/itineraries', (req, res, next) => {
-  const { parkCode } = req.body;
-  const userId = parseInt(req.body.userId);
-  const sql = `
-    insert into "itineraries" ("userId", "parkCode")
-    values ($1, $2)
-    returning "itineraryId"
-  `;
-  const params = [userId, parkCode];
-  db.query(sql, params)
-    .then(result => {
-      const { itineraryId } = result.rows[0];
-      const { itinerary } = req.body;
-      const newItinerary = itinerary.map(itineraryItem => {
-        return [itineraryId, itineraryItem, false];
-      });
-      const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
-
-      return db.query(sql)
-        .then(result => {
-          res.sendStatus(201);
-        });
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
-app.get('/api/parks/itineraries/:userId', (req, res, next) => {
+app.get('/api/parks/itineraries', (req, res, next) => {
   const userId = parseInt(req.params.userId);
   const sql = `
     select "parkName", "itineraryId"
@@ -143,23 +117,6 @@ app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
     });
 });
 
-app.post('/api/reviews', (req, res, next) => {
-  const { parkCode, content } = req.body;
-  const userId = parseInt(req.body.userId);
-  const sql = `
-        insert into "reviews" ("userId", "parkCode", "content")
-        values ($1, $2, $3)
-      `;
-  const params = [userId, parkCode, content];
-  db.query(sql, params)
-    .then(result => {
-      res.sendStatus(201);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
 app.get('/api/reviews/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
   const sql = `
@@ -195,9 +152,121 @@ app.get('/api/reviews', (req, res, next) => {
     });
 });
 
+app.post('/api/sign-up', (req, res, next) => {
+  const { username, password, name } = req.body;
+  if (!username || !password || !name) {
+    throw new ClientError(400, 'username, password, and name are required fields');
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        insert into "users" ("userFullName", "username", "hashedPassword")
+        values ($1, $2, $3)
+        on conflict ("username")
+        do nothing
+        returning "userId"
+      `;
+      const params = [name, username, hashedPassword];
+      return db.query(sql, params)
+        .then(result => {
+          const [userId] = result.rows;
+          if (!userId) {
+            throw new ClientError(400, 'the username you entered cannot be used');
+          }
+          return authenticateUser(username, password, db)
+            .then(result => {
+              res.status(201).json(result);
+            });
+        });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  authenticateUser(username, password, db)
+    .then(result => {
+      res.status(201).json(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.use(authorizationMiddleware);
+
+app.post('/api/parks/itineraries', (req, res, next) => {
+  const { parkCode } = req.body;
+  const { userId } = req.user;
+  const sql = `
+    insert into "itineraries" ("userId", "parkCode")
+    values ($1, $2)
+    returning "itineraryId"
+  `;
+  const params = [userId, parkCode];
+  db.query(sql, params)
+    .then(result => {
+      const { itineraryId } = result.rows[0];
+      const { itinerary } = req.body;
+      const newItinerary = itinerary.map(itineraryItem => {
+        return [itineraryId, itineraryItem, false];
+      });
+      const sql = format('insert into "itineraryItems" ("itineraryId", "thingToDo", "completed") VALUES %L', newItinerary);
+
+      return db.query(sql)
+        .then(result => {
+          res.sendStatus(201);
+        });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.get('/api/parks/itinerariesWithToken', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select "parkName", "itineraryId"
+      from "parks"
+      join "itineraries" using ("parkCode")
+      where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/reviews', (req, res, next) => {
+  const { parkCode, content } = req.body;
+  const { userId } = req.user;
+  const sql = `
+        insert into "reviews" ("userId", "parkCode", "content")
+        values ($1, $2, $3)
+      `;
+  const params = [userId, parkCode, content];
+  db.query(sql, params)
+    .then(result => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.get('/api/visited/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
-  const userId = 1;
+  const { userId } = req.user;
   const sql = `
     select "parkCode"
       from "visited"
@@ -215,7 +284,7 @@ app.get('/api/visited/:parkCode', (req, res, next) => {
 });
 
 app.get('/api/visited', (req, res, next) => {
-  const userId = 1;
+  const { userId } = req.user;
   const sql = `
     select "parkCode", "parkName"
       from "visited"
@@ -234,7 +303,7 @@ app.get('/api/visited', (req, res, next) => {
 
 app.post('/api/visited/:parkCode', (req, res, next) => {
   const parkCode = req.params.parkCode;
-  const userId = 1;
+  const { userId } = req.user;
   const sql = `
         insert into "visited" ("userId", "parkCode")
         values ($1, $2)
@@ -243,31 +312,6 @@ app.post('/api/visited/:parkCode', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.sendStatus(201);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
-app.post('/api/sign-up', (req, res, next) => {
-  const { username, password, name } = req.body;
-  if (!username || !password || !name) {
-    throw new ClientError(400, 'username, password, and name are required fields');
-  }
-  argon2
-    .hash(password)
-    .then(hashedPassword => {
-      const sql = `
-        insert into "users" ("userFullName", "username", "password")
-        values ($1, $2, $3)
-        returning "userId"
-      `;
-      const params = [name, username, hashedPassword];
-      return db.query(sql, params)
-        .then(result => {
-          const [userId] = result.rows;
-          res.status(201).json(userId);
-        });
     })
     .catch(err => {
       next(err);
