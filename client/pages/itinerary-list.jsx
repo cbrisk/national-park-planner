@@ -11,7 +11,7 @@ export default class ItineraryList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/parks/itinerariesWithToken', {
+    fetch('/api/parks/itineraries', {
       headers: {
         'X-Access-Token': this.props.token
       }

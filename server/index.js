@@ -60,24 +60,6 @@ app.get('/api/parks/parkCode/:parkCode', (req, res, next) => {
     });
 });
 
-app.get('/api/parks/itineraries', (req, res, next) => {
-  const userId = parseInt(req.params.userId);
-  const sql = `
-    select "parkName", "itineraryId"
-      from "parks"
-      join "itineraries" using ("parkCode")
-      where "userId" = $1
-  `;
-  const params = [userId];
-  db.query(sql, params)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
 app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
   const itineraryId = parseInt(req.params.itineraryId);
   const sql = `
@@ -91,26 +73,6 @@ app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
-app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
-  const itineraryItemId = parseInt(req.params.itineraryItemId);
-  const { completed } = req.body;
-  const sql = `
-    update "itineraryItems"
-       set "completed" = $1
-     where "itineraryItemId" = $2
-     returning *
-  `;
-  const params = [completed, itineraryItemId];
-  db.query(sql, params)
-    .then(result => {
-      const [itineraryItem] = result.rows;
-      res.json(itineraryItem);
     })
     .catch(err => {
       next(err);
@@ -229,7 +191,7 @@ app.post('/api/parks/itineraries', (req, res, next) => {
     });
 });
 
-app.get('/api/parks/itinerariesWithToken', (req, res, next) => {
+app.get('/api/parks/itineraries', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
     select "parkName", "itineraryId"
@@ -312,6 +274,29 @@ app.post('/api/visited/:parkCode', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.sendStatus(201);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
+  const { userId } = req.user;
+  const itineraryItemId = parseInt(req.params.itineraryItemId);
+  const { completed } = req.body;
+  const sql = `
+    update "itineraryItems"
+       set "completed" = $1
+      from "users"
+     where "itineraryItemId" = $2
+     and "userId" = $3
+     returning *
+  `;
+  const params = [completed, itineraryItemId, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [itineraryItem] = result.rows;
+      res.json(itineraryItem);
     })
     .catch(err => {
       next(err);
