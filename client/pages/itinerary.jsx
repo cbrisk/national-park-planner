@@ -83,7 +83,7 @@ export default class Itinerary extends React.Component {
 
     return (
       <main className="light-blue pb-3">
-        <NavBar/>
+        <NavBar signOut={this.props.signOut}/>
         <div className="m-3 text-center">
           <h3 className="blue title">{parkName}</h3>
           <h5 className="blue">Itinerary</h5>
