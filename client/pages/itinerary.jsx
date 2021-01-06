@@ -27,7 +27,8 @@ export default class Itinerary extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      itinerary: []
+      itinerary: [],
+      parkName: ''
     };
     this.handleCheck = this.handleCheck.bind(this);
   }
@@ -65,7 +66,8 @@ export default class Itinerary extends React.Component {
       .then(data => {
         this.setState({
           isLoading: false,
-          itinerary: data
+          itinerary: data,
+          parkName: data[0].parkName
         });
       })
       .catch(error => {
@@ -76,17 +78,13 @@ export default class Itinerary extends React.Component {
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
-    let parkName;
     const activities = this.state.itinerary;
-    if (this.state.itinerary.length) {
-      parkName = this.state.itinerary[0].parkName;
-    }
 
     return (
       <main className="light-blue pb-3">
         <NavBar signOut={this.props.signOut}/>
         <div className="m-3 text-center">
-          <h3 className="blue title">{parkName}</h3>
+          <h3 className="blue title">{this.state.parkName}</h3>
           <h5 className="blue">Itinerary</h5>
         </div>
         <div className="d-flex justify-content-center">

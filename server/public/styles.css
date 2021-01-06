@@ -170,6 +170,10 @@ li:last-child {
   width: 65%;
 }
 
+.park-buttons {
+  margin: 0 auto;
+}
+
 .btn-width-sm {
   width: 30%;
   font-size: 0.6rem;
@@ -184,5 +188,18 @@ li:last-child {
 @media screen and (min-width: 667px) {
   .btn-width-sm {
     width: 20%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .form-width,
+  .state-form,
+  .park-info,
+  .park-details {
+    max-width: 500px;
+  }
+
+  .park-buttons {
+    max-width: 600px;
   }
 }
