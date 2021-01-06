@@ -281,15 +281,18 @@ app.post('/api/visited/:parkCode', (req, res, next) => {
 });
 
 app.patch('/api/parks/itineraries/:itineraryItemId', (req, res, next) => {
+  const { userId } = req.user;
   const itineraryItemId = parseInt(req.params.itineraryItemId);
   const { completed } = req.body;
   const sql = `
     update "itineraryItems"
        set "completed" = $1
+      from "users"
      where "itineraryItemId" = $2
+     and "userId" = $3
      returning *
   `;
-  const params = [completed, itineraryItemId];
+  const params = [completed, itineraryItemId, userId];
   db.query(sql, params)
     .then(result => {
       const [itineraryItem] = result.rows;
