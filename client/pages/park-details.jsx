@@ -97,7 +97,7 @@ export default class ParkDetails extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'd-none' : '';
+    const className = this.state.isLoading ? 'd-none park-buttons' : 'park-buttons';
     const { fullName, states } = this.state.park;
     const path = this.props.path;
     let visited;
@@ -112,9 +112,11 @@ export default class ParkDetails extends React.Component {
     return (
       <main className="light-blue pb-3">
         <NavBar signOut={this.props.signOut} />
-        <div className="d-flex justify-content-between py-3 mx-4 mb-3">
-          <h3 className="blue title">{fullName}</h3>
-          <h3 className="blue title">{states}</h3>
+        <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-between py-3 mx-4 mb-3 form-width">
+            <h3 className="blue title">{fullName}</h3>
+            <h3 className="blue title">{states}</h3>
+          </div>
         </div>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
