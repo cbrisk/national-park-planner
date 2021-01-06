@@ -29,9 +29,8 @@ export default class SignUp extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const { userId } = data.user;
         const { token } = data;
-        this.props.updateUser(userId, token);
+        this.props.updateUser(token);
       })
       .catch(error => {
         console.error('Error:', error);
