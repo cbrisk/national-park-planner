@@ -9,7 +9,7 @@ function Activity(props) {
     props.onCheck({ name, checked });
   };
   return (
-    <div className="form-check">
+    <div className="form-check py-2">
       <input className="form-check-input" type="checkbox" value={name} id={id} onChange={handleChange}></input>
       <label className="form-check-label" htmlFor={id}>
         {name}
@@ -41,6 +41,11 @@ export default class ParkActivities extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const valid = this.state.itinerary.find(activity => activity.checked);
+    if (!valid) {
+      alert('You must check off at least one box.');
+      return;
+    }
     const body = { itinerary: this.state.itinerary, parkCode: this.props.parkCode };
     fetch('/api/parks/itineraries', {
       method: 'POST',
@@ -105,7 +110,7 @@ export default class ParkActivities extends React.Component {
           <form onSubmit={this.handleSubmit}>
             {element}
             <div className="d-flex justify-content-center">
-              <button className="btn dark-blue my-3" type="submit">
+              <button className="dark-blue py-2 px-4 text-center rounded border-0 my-3" type="submit">
                 Create Itinerary
               </button>
             </div>

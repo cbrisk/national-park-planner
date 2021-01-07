@@ -8,10 +8,10 @@ create schema "public";
 
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
-	"userFirstName" TEXT NOT NULL,
-	"userLastName" TEXT NOT NULL,
-	"userEmail" TEXT NOT NULL,
-	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
+	"userFullName" TEXT NOT NULL,
+	"username" TEXT NOT NULL,
+	"hashedPassword" TEXT NOT NULL,
+	CONSTRAINT "users_pk" PRIMARY KEY ("userId"),
 ) WITH (
   OIDS=FALSE
 );
@@ -81,3 +81,5 @@ ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk0" FOREIGN KEY ("userId"
 ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk1" FOREIGN KEY ("parkCode") REFERENCES "parks"("parkCode");
 
 ALTER TABLE "itineraryItems" ADD CONSTRAINT "itineraryItems_fk0" FOREIGN KEY ("itineraryId") REFERENCES "itineraries"("itineraryId");
+
+ALTER TABLE "users" ADD CONSTRAINT "unique_user" UNIQUE ("username");

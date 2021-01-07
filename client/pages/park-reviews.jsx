@@ -27,7 +27,7 @@ export default class ParkReviews extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
+    const className = this.state.isLoading ? 'park-info py-3 d-none rounded' : 'park-info py-3 rounded';
     let parkName;
     let element;
     if (this.state.reviews.length) {

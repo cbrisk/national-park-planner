@@ -35,6 +35,10 @@ h4 {
   font-size: 1.5rem;
 }
 
+span {
+  overflow: hidden;
+}
+
 ul {
   list-style: none;
   max-width: 95%;
@@ -46,9 +50,8 @@ a.a-footer {
   text-decoration: none;
 }
 
-p,
-label {
-  font-size: 0.8rem;
+a.a-footer:hover {
+  color: #b1dfe4;
 }
 
 textarea {
@@ -56,7 +59,8 @@ textarea {
 }
 
 button:hover,
-a:hover {
+a:hover,
+i:hover {
   cursor: pointer;
 }
 
@@ -64,35 +68,43 @@ a:visited,
 a:hover,
 a:link,
 a:active,
+a:focus,
 button:hover,
 button:active,
 button:visited,
-button:link {
+button:link,
+button:focus {
   text-decoration: none;
-  color: inherit;
+  outline: none;
 }
 
 i.home-icon,
 .itinerary-title,
-.review-title {
+.review-title,
+.park-icon {
   font-size: 1.6rem;
 }
 
-li:last-child {
+a:last-child.margin-a {
   margin-bottom: 1rem;
 }
 
 .dark-blue {
   background-color: #255f82;
-  color: #66e6f4;
+  color: #b1dfe4;
 }
 
 .light-blue {
-  background-color: #66e6f4;
+  background-color: #b1dfe4;
 }
 
 .medium-blue {
   color: #056caa;
+}
+
+.visited-blue {
+  background-color: #7f9cad;
+  color: #b1dfe4;
 }
 
 .blue {
@@ -103,14 +115,10 @@ li:last-child {
   margin-bottom: 5rem;
 }
 
-.park-img {
-  max-width: 80%;
-}
-
 .park-items {
   width: 90%;
   margin: 0 auto;
-  border-bottom: 2px solid #66e6f4;
+  border-bottom: 2px solid #b1dfe4;
 }
 
 .state-form,
@@ -122,8 +130,9 @@ li:last-child {
 }
 
 .park-info,
-.state-form {
-  border: 1px solid #255f82;
+.state-form,
+.park-list {
+  border: 1px solid #6fafd6;
 }
 
 .park-info {
@@ -136,7 +145,7 @@ li:last-child {
 
 .select-state {
   font-size: 1.5rem;
-  border: 1px solid #255f82;
+  border: 1px solid #6fafd6;
   border-radius: 4px;
 }
 
@@ -154,12 +163,12 @@ li:last-child {
 }
 
 .photos {
-  max-width: 100%;
+  width: 100%;
 }
 
 .itinerary-item {
   border: none;
-  border-bottom: 2px solid #66e6f4;
+  border-bottom: 2px solid #b1dfe4;
 }
 
 .form-width {
@@ -170,13 +179,33 @@ li:last-child {
   width: 65%;
 }
 
+.btn-width-sm {
+  width: 30%;
+  font-size: 0.85rem;
+}
+
+.btn-width:hover,
+.btn-width-sm:hover {
+  color: #b1dfe4;
+}
+
 .park-buttons {
   margin: 0 auto;
 }
 
-.btn-width-sm {
-  width: 30%;
-  font-size: 0.6rem;
+.park-icon {
+  position: absolute;
+  right: 25px;
+  color: white;
+  text-shadow:
+    2px 2px 0 #255f82,
+    2px -2px 0 #255f82,
+    -2px 2px 0 #255f82,
+    -2px -2px 0 #255f82,
+    2px 0 0 #255f82,
+    0 2px 0 #255f82,
+    -2px 0 0 #255f82,
+    0 -2px 0 #255f82;
 }
 
 @media screen and (min-width: 667px) {
@@ -185,21 +214,23 @@ li:last-child {
   }
 }
 
-@media screen and (min-width: 667px) {
-  .btn-width-sm {
-    width: 20%;
+@media screen and (min-width: 768px) {
+  span {
+    font-size: 1.6rem;
   }
-}
 
-@media screen and (min-width: 1024px) {
+  .park-buttons,
   .form-width,
   .state-form,
-  .park-info,
-  .park-details {
-    max-width: 500px;
+  .park-info {
+    max-width: 600px;
   }
 
-  .park-buttons {
-    max-width: 600px;
+  .park-details {
+    width: 600px;
+  }
+
+  .btn-width-sm {
+    font-size: 1.1rem;
   }
 }

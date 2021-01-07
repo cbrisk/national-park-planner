@@ -6,7 +6,8 @@ export default class SignIn extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      error: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,6 +29,11 @@ export default class SignIn extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
+        if (data.error) {
+          this.setState({ error: data.error });
+          event.target.reset();
+          return;
+        }
         const { token } = data;
         this.props.updateUser(token);
       })
@@ -52,9 +58,12 @@ export default class SignIn extends React.Component {
               <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="btn dark-blue mb-5" type="submit">
+              <button className="py-2 px-4 border-0 text-center rounded dark-blue mb-3" type="submit">
                 Sign In
               </button>
+            </div>
+            <div>
+              <p className="text-danger my-2">{this.state.error}</p>
             </div>
           </form>
         </div>
