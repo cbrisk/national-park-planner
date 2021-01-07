@@ -41,7 +41,7 @@ export default class ReviewDashboard extends React.Component {
         </div>
         <div className={className}>
           <div className="mt-3 mb-5 text-center">
-            <h3 className="blue review-title">{parkName}</h3>
+            <h3 className="blue title">{parkName}</h3>
             <h5 className="blue">Review Dashboard</h5>
           </div>
           <div className='div-height d-flex flex-column px-3 py-4'>

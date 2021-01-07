@@ -116,7 +116,7 @@ export default class ParkDetails extends React.Component {
       <main className="light-blue pb-3">
         <NavBar signOut={this.props.signOut} />
         <div className="d-flex justify-content-center">
-          <div className="d-flex justify-content-between py-3 mx-4 mb-3 form-width">
+          <div className="d-flex justify-content-between py-3 mx-4 mb-3 form-width overflow-hidden">
             <h3 className="blue title">{fullName}</h3>
             <h3 className="blue title">{states}</h3>
           </div>
