@@ -175,8 +175,8 @@ a:last-child.margin-a {
   width: 65%;
 }
 
-.park-buttons {
-  margin: 0 auto;
+.btn-width:hover {
+  color: #b1dfe4;
 }
 
 .btn-width-sm {
@@ -184,8 +184,8 @@ a:last-child.margin-a {
   font-size: 0.85rem;
 }
 
-.width-chevron {
-  width: 30px;
+.park-buttons {
+  margin: 0 auto;
 }
 
 .park-icon {
@@ -207,27 +207,18 @@ a:last-child.margin-a {
   .btn-width {
     width: 35%;
   }
-
-  .btn-width-sm {
-    width: 20%;
-  }
 }
 
 @media screen and (min-width: 768px) {
   span {
     font-size: 1.6rem;
   }
-}
 
-@media screen and (min-width: 1024px) {
+  .park-buttons,
   .form-width,
   .state-form,
   .park-info,
   .park-details {
     max-width: 500px;
-  }
-
-  .park-buttons {
-    max-width: 600px;
   }
 }
