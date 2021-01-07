@@ -40,7 +40,7 @@ export default class ReviewDashboard extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="mt-3 mb-5 text-center">
+          <div className="mt-3 mb-5 mx-3 text-center">
             <h3 className="blue title">{parkName}</h3>
             <h5 className="blue">Review Dashboard</h5>
           </div>
