@@ -134,7 +134,7 @@ app.post('/api/sign-up', (req, res, next) => {
         .then(result => {
           const [userId] = result.rows;
           if (!userId) {
-            throw new ClientError(400, 'the username you entered cannot be used');
+            throw new ClientError(400, 'That username is not available.');
           }
           return authenticateUser(username, password, db)
             .then(result => {

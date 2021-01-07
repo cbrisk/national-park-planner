@@ -13,16 +13,16 @@ function authenticateUser(username, password, db) {
     const params = [username];
     db.query(sql, params)
       .then(result => {
-        const [ user ] = result.rows;
+        const [user] = result.rows;
         if (!user) {
-          throw new ClientError(401, 'invalid login');
+          throw new ClientError(401, 'Username not found.');
         }
         const { userId, hashedPassword } = user;
         return argon2
           .verify(hashedPassword, password)
           .then(isMatching => {
             if (!isMatching) {
-              throw new ClientError(401, 'invalid login');
+              throw new ClientError(401, 'Password doesn\'t match.');
             }
             const payload = { userId, username };
             const token = jwt.sign(payload, process.env.TOKEN_SECRET);

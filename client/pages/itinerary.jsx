@@ -5,7 +5,7 @@ function ItineraryItem(props) {
   const { itineraryItemId, thingToDo, completed } = props.activity;
 
   return (
-    <li className="list-group-item border-0 py-1">
+    <li className="list-group-item border-0 py-2">
       <div className="form-check">
         <input
           id={itineraryItemId}

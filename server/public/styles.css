@@ -59,7 +59,8 @@ textarea {
 }
 
 button:hover,
-a:hover {
+a:hover,
+i:hover {
   cursor: pointer;
 }
 
@@ -67,11 +68,14 @@ a:visited,
 a:hover,
 a:link,
 a:active,
+a:focus,
 button:hover,
 button:active,
 button:visited,
-button:link {
+button:link,
+button:focus {
   text-decoration: none;
+  outline: none;
 }
 
 i.home-icon,
@@ -175,13 +179,14 @@ a:last-child.margin-a {
   width: 65%;
 }
 
-.btn-width:hover {
-  color: #b1dfe4;
-}
-
 .btn-width-sm {
   width: 30%;
   font-size: 0.85rem;
+}
+
+.btn-width:hover,
+.btn-width-sm:hover {
+  color: #b1dfe4;
 }
 
 .park-buttons {
@@ -190,7 +195,7 @@ a:last-child.margin-a {
 
 .park-icon {
   position: absolute;
-  right: 20px;
+  right: 25px;
   color: white;
   text-shadow:
     2px 2px 0 #255f82,
@@ -217,8 +222,15 @@ a:last-child.margin-a {
   .park-buttons,
   .form-width,
   .state-form,
-  .park-info,
+  .park-info {
+    max-width: 600px;
+  }
+
   .park-details {
-    max-width: 500px;
+    width: 600px;
+  }
+
+  .btn-width-sm {
+    font-size: 1.1rem;
   }
 }
