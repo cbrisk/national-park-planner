@@ -60,7 +60,7 @@ export default class ParkDetails extends React.Component {
 
   getClass(tab) {
     const tabSelected = this.props.tab;
-    const className = tab === tabSelected ? 'nav-link tab active-tab text-center' : 'nav-link tab text-center';
+    const className = tab === tabSelected ? 'nav-link tab active-tab text-center blue' : 'nav-link tab text-center blue';
     return className;
   }
 
@@ -76,7 +76,7 @@ export default class ParkDetails extends React.Component {
         <p className="mx-3 pb-3">{weatherInfo}</p>
       );
     } else if (tabSelected === 'photos') {
-      if (!images.length) {
+      if (!images) {
         return <span className="text-danger my-2">No image found</span>;
       }
       return (
@@ -102,12 +102,15 @@ export default class ParkDetails extends React.Component {
     const path = this.props.path;
     let visited;
     let disabled;
+    let classButton;
     if (this.state.visited) {
       visited = '✔ Visited!';
       disabled = true;
+      classButton = 'visited-blue text-center border-0 btn-width-sm py-2 rounded';
     } else {
       visited = 'Mark as visited';
       disabled = false;
+      classButton = 'dark-blue text-center border-0 btn-width-sm py-2 rounded';
     }
     return (
       <main className="light-blue pb-3">
@@ -122,18 +125,14 @@ export default class ParkDetails extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="mx-4 mb-4 d-flex justify-content-around">
-            <button type="button" className="btn dark-blue btn-width-sm">
-              <a href={`#parks/activities?parkCode=${this.props.parkCode}`}>
-                Things to do
-              </a>
-            </button>
-            <button type="button" className="btn dark-blue btn-width-sm">
-              <a href={`#review-dashboard?parkCode=${this.props.parkCode}`}>
-                Reviews
-              </a>
-            </button>
-            <button type="button" disabled={disabled} onClick={this.handleClick} className="btn dark-blue btn-width-sm">
+          <div className="mx-2 mb-4 d-flex justify-content-between">
+            <a href={`#parks/activities?parkCode=${this.props.parkCode}`} className="dark-blue text-center btn-width-sm py-2 rounded">
+              Things to do
+            </a>
+            <a href={`#review-dashboard?parkCode=${this.props.parkCode}`} className="dark-blue text-center btn-width-sm py-2 rounded">
+              Reviews
+            </a>
+            <button type="button" disabled={disabled} onClick={this.handleClick} className={classButton}>
                 { visited }
             </button>
           </div>

@@ -16,16 +16,12 @@ export default function Home(props) {
           <h4 className="margin-bottom medium-blue">
             Start planning your visit now!
           </h4>
-          <button type="button" className="btn mb-5 dark-blue btn-padding btn-width">
-            <a href='#all-parks'>
-              View all National Parks
-            </a>
-          </button>
-          <button type="button" className="btn margin-bottom dark-blue btn-width">
-            <a href='#state-form'>
-              View National Parks by State
-            </a>
-          </button>
+          <a href='#all-parks' className="mb-5 text-center dark-blue btn-width p-2 rounded">
+            View all National Parks
+          </a>
+          <a href='#state-form' className="mb-5 text-center dark-blue btn-width p-2 rounded">
+            View National Parks by State
+          </a>
         </div>
       </main>
     </>

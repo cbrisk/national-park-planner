@@ -26,17 +26,19 @@ export default class ParksReviewedList extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
+    const className = this.state.isLoading ? 'park-info py-3 d-none rounded' : 'park-info py-3 rounded';
     let element;
     if (this.state.parksReviewed.length) {
       element = this.state.parksReviewed.map((park, index) => {
         return (
-          <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>
-            {park.parkName}
-            <div className="d-flex align-items-center">
-              <a href={`#reviews?parkCode=${park.parkCode}`}><i className="fas fa-chevron-right blue"></i></a>
-            </div>
-          </li>
+          <a href={`#reviews?parkCode=${park.parkCode}`} key={index}>
+            <li className="list-group-item itinerary-item d-flex justify-content-between blue py-4">
+              {park.parkName}
+              <div className="d-flex align-items-center">
+                <i className="fas fa-chevron-right blue"></i>
+              </div>
+            </li>
+          </a>
         );
       });
     } else {

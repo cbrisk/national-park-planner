@@ -70,9 +70,9 @@ export default class NewReview extends React.Component {
         <div className={className}>
           <form className="d-flex flex-column align-items-center form-width" onSubmit={this.handleSubmit}>
             <label className="form-label py-3">{this.state.parkName}</label>
-            <textarea className="form-control mb-4" name="review" placeholder="Type review here" onChange={this.handleChange}></textarea>
+            <textarea required className="form-control mb-4" name="review" placeholder="Type review here" onChange={this.handleChange}></textarea>
             <div>
-              <button className="btn dark-blue mb-5" type="submit">
+              <button className="py-2 text-center border-0 rounded dark-blue mb-5" type="submit">
                 Submit
               </button>
             </div>

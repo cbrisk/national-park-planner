@@ -9,7 +9,7 @@ function Activity(props) {
     props.onCheck({ name, checked });
   };
   return (
-    <div className="form-check">
+    <div className="form-check py-1">
       <input className="form-check-input" type="checkbox" value={name} id={id} onChange={handleChange}></input>
       <label className="form-check-label" htmlFor={id}>
         {name}

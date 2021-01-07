@@ -30,17 +30,19 @@ export default class ItineraryList extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info py-3 d-none' : 'park-info py-3';
+    const className = this.state.isLoading ? 'park-info py-3 d-none rounded' : 'park-info py-3 rounded';
     let element;
     if (this.state.itineraries.length) {
       element = this.state.itineraries.map((park, index) => {
         return (
-          <li className="list-group-item itinerary-item d-flex justify-content-between blue" key={index}>
-            {park.parkName}
-            <div className="d-flex align-items-center">
-              <a href={`#itinerariesById?id=${park.itineraryId}`}><i className="fas fa-chevron-right blue"></i></a>
-            </div>
-          </li>
+          <a href={`#itinerariesById?id=${park.itineraryId}`} key={index}>
+            <li className="list-group-item itinerary-item d-flex justify-content-between blue py-4" >
+              {park.parkName}
+              <div className="d-flex align-items-center">
+                <i className="fas fa-chevron-right blue"></i>
+              </div>
+            </li>
+          </a>
         );
       });
     } else {

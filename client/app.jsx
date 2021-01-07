@@ -23,7 +23,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      token: null
+      token: null,
+      isAuthorizing: true
     };
     this.updateUser = this.updateUser.bind(this);
     this.signOut = this.signOut.bind(this);
@@ -33,7 +34,8 @@ export default class App extends React.Component {
     const localStorage = window.localStorage.getItem('jwt');
     const token = localStorage || null;
     this.setState({
-      token
+      token,
+      isAuthorizing: false
     });
     window.addEventListener('hashchange', event => {
       this.setState({
@@ -102,6 +104,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    if (this.state.isAuthorizing) return null;
     return (
       <div className="custom-container">
         <Header />

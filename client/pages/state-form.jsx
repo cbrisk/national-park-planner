@@ -83,7 +83,7 @@ export default class StateForm extends React.Component {
               <option value="wy">WY</option>
             </select>
             <div>
-              <button className="btn dark-blue mb-5" type="submit">
+              <button className="btn dark-blue mb-5 home-screen" type="submit">
                 View Parks
               </button>
             </div>

@@ -5,22 +5,24 @@ function Park(props) {
   const { fullName, states, images } = props.park;
   let element;
   if (images.length) {
-    element = <img src={images[0].url} className="park-img" alt="Park image failed to load"></img>;
+    element = <img src={images[0].url} className="photos" alt="Park image failed to load"></img>;
   } else {
     element = <span className="text-danger my-2">No image found</span>;
   }
 
   return (
-    <li className="list-group-item park-items">
-      <div className="d-flex justify-content-between py-3">
-        <span className="blue">{fullName}</span>
-        <span className="blue">{states}</span>
-      </div>
-      <div className="d-flex justify-content-between align-items-center">
-        {element}
-        <a href={`#parks?parkCode=${props.parkCode}&tab=description`}><i className="fas fa-chevron-right blue"></i></a>
-      </div>
-    </li>
+    <a href={`#parks?parkCode=${props.parkCode}&tab=description`} className="margin-a">
+      <li className="list-group-item park-items rounded">
+        <div className="d-flex justify-content-between py-3">
+          <span className="blue">{fullName}</span>
+          <span className="blue">{states}</span>
+        </div>
+        <div className="d-flex align-items-center py-3">
+          {element}
+          <i className="fas fa-chevron-right blue park-icon"></i>
+        </div>
+      </li>
+    </a>
   );
 }
 
