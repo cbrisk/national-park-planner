@@ -9,9 +9,9 @@ create schema "public";
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
 	"userFullName" TEXT NOT NULL,
-	"username" TEXT NOT NULL,
+	"username" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
-	CONSTRAINT "users_pk" PRIMARY KEY ("userId"),
+	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
 );
@@ -74,12 +74,12 @@ CREATE TABLE "parks" (
 
 
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("parkCode") REFERENCES "parks"("parkCode");
 
 ALTER TABLE "visited" ADD CONSTRAINT "visited_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+ALTER TABLE "visited" ADD CONSTRAINT "visited_fk1" FOREIGN KEY ("parkCode") REFERENCES "parks"("parkCode");
 
 ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "itineraries" ADD CONSTRAINT "itineraries_fk1" FOREIGN KEY ("parkCode") REFERENCES "parks"("parkCode");
 
 ALTER TABLE "itineraryItems" ADD CONSTRAINT "itineraryItems_fk0" FOREIGN KEY ("itineraryId") REFERENCES "itineraries"("itineraryId");
-
-ALTER TABLE "users" ADD CONSTRAINT "unique_user" UNIQUE ("username");
