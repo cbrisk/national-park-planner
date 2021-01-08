@@ -15,14 +15,14 @@ function authenticateUser(username, password, db) {
       .then(result => {
         const [user] = result.rows;
         if (!user) {
-          throw new ClientError(401, 'Username not found.');
+          throw new ClientError(401, 'Username or password aren\'t valid.');
         }
         const { userId, hashedPassword } = user;
         return argon2
           .verify(hashedPassword, password)
           .then(isMatching => {
             if (!isMatching) {
-              throw new ClientError(401, 'Password doesn\'t match.');
+              throw new ClientError(401, 'Username or password aren\'t valid.');
             }
             const payload = { userId, username };
             const token = jwt.sign(payload, process.env.TOKEN_SECRET);
