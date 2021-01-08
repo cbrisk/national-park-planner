@@ -8,8 +8,11 @@ const ClientError = require('./client-error');
 const argon2 = require('argon2');
 const authenticateUser = require('./authenticate-user');
 const authorizationMiddleware = require('./authorization-middleware');
+const staticMiddleware = require('./static-middleware');
 
 const app = express();
+
+app.use(staticMiddleware);
 
 const jsonMiddleware = express.json();
 app.use(jsonMiddleware);
