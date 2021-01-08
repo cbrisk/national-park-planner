@@ -5,8 +5,8 @@ function Activity(props) {
   const { name, id } = props.activity;
 
   const handleChange = event => {
-    const { checked } = event.target;
-    props.onCheck({ name, checked });
+    const { checked, value } = event.target;
+    props.onCheck({ value, checked });
   };
   return (
     <div className="form-check py-2">
@@ -32,8 +32,8 @@ export default class ParkActivities extends React.Component {
 
   handleCheck(activity) {
     const itinerary = activity.checked
-      ? this.state.itinerary.concat(activity.name)
-      : this.state.itinerary.filter(activity => activity !== activity.name);
+      ? this.state.itinerary.concat(activity.value)
+      : this.state.itinerary.filter(itineraryItem => itineraryItem !== activity.value);
     this.setState({
       itinerary: itinerary
     });
@@ -41,8 +41,7 @@ export default class ParkActivities extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const valid = this.state.itinerary.find(activity => activity.checked);
-    if (!valid) {
+    if (!this.state.itinerary.length) {
       alert('You must check off at least one box.');
       return;
     }
