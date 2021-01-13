@@ -36,7 +36,7 @@ Try the application live at [https://national-park-trip-planner.herokuapp.com/](
 
 ## Preview
 
-
+![Preview image of National Park Planner](server/public/preview-app.gif)
 
 ## Development
 
