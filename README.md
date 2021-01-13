@@ -60,6 +60,12 @@ Try the application live at [https://national-park-trip-planner.herokuapp.com/](
     ```shell
     npm install
     ```
+    
+1. Create a Database for the app
+
+    ```shell
+    createdb nationalParkPlanner
+    ```
 
 1. Import the example database to PostgresQL.
 
