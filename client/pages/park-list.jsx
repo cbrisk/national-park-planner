@@ -31,8 +31,10 @@ export default class ParkList extends React.Component {
     super(props);
     this.state = {
       parks: [],
-      isLoading: true
+      isLoading: true,
+      search: ''
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -51,9 +53,16 @@ export default class ParkList extends React.Component {
       });
   }
 
+  handleChange(event) {
+    this.setState({
+      search: event.target.value
+    });
+  }
+
   render() {
-    const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
+    const spinner = this.state.isLoading ? 'spinner-border blue mb-4' : 'spinner-border blue d-none';
     const display = this.props.stateCode ? `Parks in ${this.props.stateCode.toUpperCase()}` : 'All Parks';
+    const search = this.state.parks.filter(park => park.fullName.toLowerCase().includes(this.state.search.toLowerCase()));
     return (
       <main className="light-blue">
         <NavBar signOut={this.props.signOut} />
@@ -61,9 +70,12 @@ export default class ParkList extends React.Component {
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
         </div>
+        <div className="d-flex justify-content-center mb-4">
+          <input type="text" value={this.state.search} onChange={this.handleChange} className="blue search rounded" placeholder="Search here"/>
+        </div>
         <ul className="list-group">
           {
-            this.state.parks.map(park => {
+            search.map(park => {
               return (
                 <Park
                   key={park.parkCode}

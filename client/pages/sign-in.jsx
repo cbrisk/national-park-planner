@@ -31,7 +31,9 @@ export default class SignIn extends React.Component {
       .then(data => {
         if (data.error) {
           this.setState({ error: data.error });
-          event.target.reset();
+          if (event.target.name !== 'demo') {
+            event.target.reset();
+          }
           return;
         }
         const { token } = data;
@@ -51,19 +53,29 @@ export default class SignIn extends React.Component {
           <form className="d-flex flex-column align-items-center pt-3" onSubmit={this.handleSubmit}>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Username</label>
-              <input required id="username" type="text" value={this.state.username} name="username" onChange={this.handleChange} className="form-control" />
+              <input required id="username" type="text" name="username" onChange={this.handleChange} className="form-control" />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
-              <input required id="password" type="password" value={this.state.password} name="password" onChange={this.handleChange} className="form-control" />
+              <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="py-2 px-4 border-0 text-center rounded dark-blue mb-3" type="submit">
+              <button className="py-2 px-4 border-0 text-center rounded dark-blue mb-0" type="submit">
                 Sign In
               </button>
             </div>
             <div>
               <p className="text-danger my-2">{this.state.error}</p>
+            </div>
+            <div className="pb-2 text-center">
+              <p className="mb-0">Don&apos;t have an account?</p>
+              <a href="#sign-up" className="text-decoration-none text-primary">Sign Up</a>
+            </div>
+            <div className="pb-4 text-center">
+              <p className="mb-1">Don&apos;t want to register?</p>
+              <button className="py-2 px-4 border-0 text-center rounded dark-blue mb-3" type="button" name="demo" onClick={this.handleSubmit}>
+                Sign In - Demo
+              </button>
             </div>
           </form>
         </div>

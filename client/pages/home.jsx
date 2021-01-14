@@ -4,7 +4,7 @@ import Redirect from '../components/redirect';
 
 export default function Home(props) {
 
-  if (!props.token) return <Redirect to="sign-up" />;
+  if (!props.token) return <Redirect to="sign-in" />;
   return (
     <>
       <main className="home">
