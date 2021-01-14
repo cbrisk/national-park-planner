@@ -71,7 +71,7 @@ export default class ParkList extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className="d-flex justify-content-center mb-4">
-          <input type="text" value={this.state.search} onChange={this.handleChange} className="blue search rounded" placeholder="Search here"/>
+          <input type="text" value={this.state.search} onChange={this.handleChange} className="form-control blue search rounded" placeholder="Search here"/>
         </div>
         <ul className="list-group">
           {
