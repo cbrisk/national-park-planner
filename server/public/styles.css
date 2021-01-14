@@ -131,7 +131,8 @@ a:last-child.margin-a {
 
 .park-info,
 .state-form,
-.park-list {
+.park-list,
+.park-details {
   border: 1px solid #6fafd6;
 }
 
@@ -171,6 +172,10 @@ a:last-child.margin-a {
   border-bottom: 2px solid #b1dfe4;
 }
 
+a:last-child .itinerary-item {
+  border-bottom: none;
+}
+
 .form-width {
   width: 90%;
 }
@@ -206,6 +211,10 @@ a:last-child.margin-a {
     0 2px 0 #255f82,
     -2px 0 0 #255f82,
     0 -2px 0 #255f82;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 @media screen and (min-width: 667px) {

@@ -109,7 +109,7 @@ export default class App extends React.Component {
       <div className="custom-container">
         <Header />
         { this.renderPage() }
-        <Footer />
+        <Footer token={this.state.token}/>
       </div>
     );
   }
