@@ -70,8 +70,9 @@ export default class SignUp extends React.Component {
             <div>
               <p className="text-danger my-2">{this.state.error}</p>
             </div>
-            <div className="pb-4">
-              <a href="#sign-in" className="text-decoration-none text-primary">Already have an account? Sign In</a>
+            <div className="pb-4 text-center">
+              <p className="mb-0">Already have an account? <br /> Don&apos;t want to register?</p>
+              <a href="#sign-in" className="text-decoration-none text-primary">Sign In</a>
             </div>
           </form>
         </div>

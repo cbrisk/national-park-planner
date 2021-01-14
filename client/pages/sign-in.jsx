@@ -5,8 +5,8 @@ export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'demouser',
+      password: 'password',
       error: ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -51,11 +51,11 @@ export default class SignIn extends React.Component {
           <form className="d-flex flex-column align-items-center pt-3" onSubmit={this.handleSubmit}>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Username</label>
-              <input required id="username" type="text" name="username" onChange={this.handleChange} className="form-control" />
+              <input required id="username" type="text" value={this.state.username} name="username" onChange={this.handleChange} className="form-control" />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
-              <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
+              <input required id="password" type="password" value={this.state.password} name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
               <button className="py-2 px-4 border-0 text-center rounded dark-blue mb-3" type="submit">
