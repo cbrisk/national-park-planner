@@ -60,7 +60,7 @@ Try the application live at [https://national-park-trip-planner.herokuapp.com/](
     ```shell
     npm install
     ```
-    
+
 1. Create a Database for the app
 
     ```shell
@@ -78,3 +78,4 @@ Try the application live at [https://national-park-trip-planner.herokuapp.com/](
     ```shell
     npm run dev
     ```
+1. If you wish, start with registering a Demo User with the username "demo-user" and password "hello"
