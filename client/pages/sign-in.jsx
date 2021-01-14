@@ -5,8 +5,8 @@ export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'demouser',
-      password: 'password',
+      username: 'demo-user',
+      password: 'hello',
       error: ''
     };
     this.handleChange = this.handleChange.bind(this);
