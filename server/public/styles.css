@@ -132,7 +132,8 @@ a:last-child.margin-a {
 .park-info,
 .state-form,
 .park-list,
-.park-details {
+.park-details,
+.search {
   border: 1px solid #6fafd6;
 }
 
@@ -180,7 +181,8 @@ a:last-child .itinerary-item {
   width: 90%;
 }
 
-.btn-width {
+.btn-width,
+.search {
   width: 65%;
 }
 
@@ -217,8 +219,14 @@ a:last-child .itinerary-item {
   visibility: hidden;
 }
 
+.search:focus,
+.search.active {
+  outline: #255f82;
+}
+
 @media screen and (min-width: 667px) {
-  .btn-width {
+  .btn-width,
+  .search {
     width: 35%;
   }
 }
@@ -241,5 +249,9 @@ a:last-child .itinerary-item {
 
   .btn-width-sm {
     font-size: 1.1rem;
+  }
+
+  .search {
+    font-size: 1.4rem;
   }
 }

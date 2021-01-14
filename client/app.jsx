@@ -67,7 +67,7 @@ export default class App extends React.Component {
     } else if (route.path === 'sign-in') {
       return <SignIn token={this.state.token} updateUser={this.updateUser} />;
     } else if (!this.state.token) {
-      return <Redirect to="sign-up" />;
+      return <Redirect to="sign-in" />;
     } else if (route.path === 'all-parks') {
       return <ParkList path={this.state.route.path} signOut={this.signOut}/>;
     } else if (route.path === 'state-form') {
