@@ -98,7 +98,12 @@ export default class ParkDetails extends React.Component {
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
     const className = this.state.isLoading ? 'd-none park-buttons' : 'park-buttons';
-    const { fullName, states } = this.state.park;
+    const { fullName } = this.state.park;
+    let states;
+    if (!Array.isArray(this.state.park)) {
+      states = this.state.park.states;
+      states = states.split(',').join(', ');
+    }
     const path = this.props.path;
     let visited;
     let disabled;
@@ -117,7 +122,7 @@ export default class ParkDetails extends React.Component {
         <NavBar signOut={this.props.signOut} />
         <div className="d-flex justify-content-center">
           <div className="d-flex justify-content-between py-3 mx-4 mb-3 form-width overflow-hidden">
-            <h3 className="blue title">{fullName}</h3>
+            <h3 className="blue title pr-3">{fullName}</h3>
             <h3 className="blue title">{states}</h3>
           </div>
         </div>

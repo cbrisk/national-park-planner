@@ -15,7 +15,7 @@ function Park(props) {
       <li className="list-group-item park-items rounded">
         <div className="d-flex justify-content-between py-3">
           <span className="blue">{fullName}</span>
-          <span className="blue">{states}</span>
+          <span className="blue">{states.split(',').join(', ')}</span>
         </div>
         <div className="d-flex align-items-center pt-3 pb-4">
           {element}
