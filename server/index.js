@@ -71,6 +71,7 @@ app.get('/api/parks/itinerariesById/:itineraryId', (req, res, next) => {
       join "itineraries" using ("itineraryId")
       join "parks" using ("parkCode")
       where "itineraryId" = $1
+      order by "thingToDo"
   `;
   const params = [itineraryId];
   db.query(sql, params)
@@ -107,6 +108,7 @@ app.get('/api/reviews', (req, res, next) => {
       from "reviews"
       join "parks" using ("parkCode")
       group by "parkName", "parkCode"
+      order by "parkName"
   `;
   db.query(sql)
     .then(result => {
@@ -201,6 +203,7 @@ app.get('/api/parks/itineraries', (req, res, next) => {
       from "parks"
       join "itineraries" using ("parkCode")
       where "userId" = $1
+      order by "parkName"
   `;
   const params = [userId];
   db.query(sql, params)
@@ -255,6 +258,7 @@ app.get('/api/visited', (req, res, next) => {
       from "visited"
       join "parks" using ("parkCode")
       where "userId" = $1
+      order by "parkName"
   `;
   const params = [userId];
   db.query(sql, params)
