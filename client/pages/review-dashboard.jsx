@@ -36,6 +36,9 @@ export default class ReviewDashboard extends React.Component {
     return (
       <main className="light-blue pb-3">
         <NavBar signOut={this.props.signOut}/>
+        <a href={`#parks?parkCode=${this.props.parkCode}&tab=description`} className="">
+          <i className="fas fa-chevron-circle-left medium-blue back-icon p-3"></i>
+        </a>
         <div className="d-flex justify-content-center">
           <div className={spinner} role="status"></div>
         </div>

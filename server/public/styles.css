@@ -85,6 +85,10 @@ i.home-icon,
   font-size: 1.6rem;
 }
 
+i.back-icon {
+  font-size: 1.7rem;
+}
+
 a:last-child.margin-a {
   margin-bottom: 1rem;
 }

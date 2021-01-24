@@ -77,7 +77,7 @@ export default class ParkActivities extends React.Component {
 
   render() {
     const spinner = this.state.isLoading ? 'spinner-border blue' : 'spinner-border blue d-none';
-    const className = this.state.isLoading ? 'park-info px-3 py-4 d-none' : 'park-info px-3 py-4';
+    const className = this.state.isLoading ? 'park-info px-3 py-4 d-none rounded' : 'park-info px-3 py-4 rounded';
     let fullName;
     let element;
     if (this.state.park) {
@@ -97,6 +97,9 @@ export default class ParkActivities extends React.Component {
     return (
       <main className="light-blue pb-3">
         <NavBar signOut={this.props.signOut} />
+        <a href={`#parks?parkCode=${this.props.parkCode}&tab=description`} className="">
+          <i className="fas fa-chevron-circle-left medium-blue back-icon p-3"></i>
+        </a>
         <div className="m-3 text-center">
           <h3 className="blue title">{fullName}</h3>
           <h5 className="blue">Things to do</h5>
