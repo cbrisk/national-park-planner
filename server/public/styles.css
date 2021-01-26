@@ -177,7 +177,8 @@ a:last-child.margin-a {
   border-bottom: 2px solid #b1dfe4;
 }
 
-a:last-child .itinerary-item {
+a:last-child .itinerary-item,
+.reviews:last-child {
   border-bottom: none;
 }
 

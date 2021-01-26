@@ -134,7 +134,7 @@ export default class ParkDetails extends React.Component {
             <a href={`#parks/activities?parkCode=${this.props.parkCode}`} className="dark-blue text-center btn-width-sm py-2 rounded">
               Things to do
             </a>
-            <a href={`#review-dashboard?parkCode=${this.props.parkCode}`} className="dark-blue text-center btn-width-sm py-2 rounded">
+            <a href={`#reviews?parkCode=${this.props.parkCode}`} className="dark-blue text-center btn-width-sm py-2 rounded">
               Reviews
             </a>
             <button type="button" disabled={disabled} onClick={this.handleClick} className={classButton}>

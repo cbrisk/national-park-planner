@@ -59,11 +59,9 @@ export default class ItineraryList extends React.Component {
           <div className={spinner} role="status"></div>
         </div>
         <div className={className}>
-          <div className="mb-4">
-            <ul className="list-group">
-              { element }
-            </ul>
-          </div>
+          <ul className="list-group">
+            { element }
+          </ul>
         </div>
       </main >
     );

@@ -9,7 +9,6 @@ import ParkDetails from './pages/park-details';
 import ParkActivities from './pages/park-activities';
 import ItineraryList from './pages/itinerary-list';
 import Itinerary from './pages/itinerary';
-import ReviewDashboard from './pages/review-dashboard';
 import NewReview from './pages/new-review';
 import ParkReviews from './pages/park-reviews';
 import ParksReviewedList from './pages/parks-reviewed-list';
@@ -87,9 +86,6 @@ export default class App extends React.Component {
     } else if (route.path === 'itinerariesById') {
       const itineraryId = route.params.get('id');
       return <Itinerary token={this.state.token} itineraryId={itineraryId} signOut={this.signOut}/>;
-    } else if (route.path === 'review-dashboard') {
-      const parkCode = route.params.get('parkCode');
-      return <ReviewDashboard parkCode={parkCode} signOut={this.signOut}/>;
     } else if (route.path === 'new-review') {
       const parkCode = route.params.get('parkCode');
       return <NewReview token={this.state.token} parkCode={parkCode} signOut={this.signOut}/>;
