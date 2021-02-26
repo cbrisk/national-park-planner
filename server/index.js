@@ -141,7 +141,7 @@ app.post('/api/sign-up', (req, res, next) => {
           if (!userId) {
             throw new ClientError(400, 'That username is not available.');
           }
-          return authenticateUser(username, password, db)
+          return authenticateUser(username, password, db, userId)
             .then(result => {
               res.status(201).json(result);
             });
@@ -157,7 +157,7 @@ app.post('/api/sign-in', (req, res, next) => {
   if (!username || !password) {
     throw new ClientError(401, 'invalid login');
   }
-  authenticateUser(username, password, db)
+  authenticateUser(username, password, db, 'sign-in')
     .then(result => {
       res.status(201).json(result);
     })
